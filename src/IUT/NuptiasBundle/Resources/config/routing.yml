@@ -6,6 +6,6 @@ iut_nuptias_accueil:
     path:     /accueil
     defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
 
-iut_nuptias_accueil_packs:
-    path:     /accueil/packs
+iut_nuptias_packs:
+    path:     /packs
     defaults: { _controller: IUTNuptiasBundle:Nuptias:pack }
