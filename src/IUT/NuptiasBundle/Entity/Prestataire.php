@@ -31,6 +31,13 @@ class Prestataire
     /**
      * @var string
      *
+     * @ORM\Column(name="tel", type="string", length=35, unique=true)
+     */
+    private $tel;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="mdp", type="string", length=35, unique=true)
      */
     private $mdp;
