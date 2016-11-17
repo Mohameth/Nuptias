@@ -1,0 +1,11 @@
+iut_nuptias_home:
+    path:     /
+    defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
+
+iut_nuptias_accueil:
+    path:     /accueil
+    defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
+
+iut_nuptias_accueil_packs:
+    path:     /accueil/packs
+    defaults: { _controller: IUTNuptiasBundle:Nuptias:pack }

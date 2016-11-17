@@ -1,0 +1,7 @@
+iut_nuptias:
+    resource: "@IUTNuptiasBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
