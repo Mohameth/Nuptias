@@ -5,12 +5,12 @@ namespace IUT\NuptiasBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Utilisateur
+ * Prestataire
  *
- * @ORM\Table(name="utilisateur")
- * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\UtilisateurRepository")
+ * @ORM\Table(name="prestataire")
+ * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\PrestataireRepository")
  */
-class Utilisateur
+class Prestataire
 {
     /**
      * @var int
@@ -24,9 +24,9 @@ class Utilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="pseudo", type="string", length=35, unique=true)
+     * @ORM\Column(name="nom", type="string", length=35, unique=true)
      */
-    private $pseudo;
+    private $nom;
 
     /**
      * @var string
@@ -42,13 +42,6 @@ class Utilisateur
      */
     private $mail;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=16)
-     */
-    private $role;
-
 
     /**
      * Get id
@@ -61,27 +54,27 @@ class Utilisateur
     }
 
     /**
-     * Set pseudo
+     * Set nom
      *
-     * @param string $pseudo
+     * @param string $nom
      *
-     * @return Utilisateur
+     * @return Prestataire
      */
-    public function setPseudo($pseudo)
+    public function setNom($nom)
     {
-        $this->pseudo = $pseudo;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get pseudo
+     * Get nom
      *
      * @return string
      */
-    public function getPseudo()
+    public function getNom()
     {
-        return $this->pseudo;
+        return $this->nom;
     }
 
     /**
@@ -89,7 +82,7 @@ class Utilisateur
      *
      * @param string $mdp
      *
-     * @return Utilisateur
+     * @return Prestataire
      */
     public function setMdp($mdp)
     {
@@ -113,7 +106,7 @@ class Utilisateur
      *
      * @param string $mail
      *
-     * @return Utilisateur
+     * @return Prestataire
      */
     public function setMail($mail)
     {
@@ -131,29 +124,4 @@ class Utilisateur
     {
         return $this->mail;
     }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return Utilisateur
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
 }
-
