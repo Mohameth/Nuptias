@@ -1,7 +1,7 @@
 iut_nuptias_home:
     path:     /
     defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
-
+#home à supprimer
 iut_nuptias_accueil:
     path:     /accueil
     defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
