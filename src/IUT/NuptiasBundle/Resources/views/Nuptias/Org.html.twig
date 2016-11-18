@@ -1,0 +1,13 @@
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Organisation Du Mariage
+{% endblock %}
+
+{% block body %}
+<h1> Organisation Du Mariage </h1>
+  <p> Par où Commencer ? </p>
+
+  <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_invites') }}"><span class="glyphicon glyphicon-list"></span> Gérer Vos Invités</a>
+
+{% endblock %}

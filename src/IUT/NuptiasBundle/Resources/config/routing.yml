@@ -4,8 +4,25 @@ iut_nuptias_home:
 #home à supprimer
 iut_nuptias_accueil:
     path:     /accueil
-    defaults: { _controller: IUTNuptiasBundle:Nuptias:index }
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:index
 
 iut_nuptias_packs:
     path:     /packs
-    defaults: { _controller: IUTNuptiasBundle:Nuptias:pack }
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:pack
+
+iut_nuptias_dashBoard:
+    path:    /DashBoard
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:DashBoard
+
+iut_nuptias_organisation:
+    path:    /organisation
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:organisation
+
+iut_nuptias_invites:
+    path:    /organisation/invites
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:invites

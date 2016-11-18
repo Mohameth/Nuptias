@@ -1,0 +1,37 @@
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Gestion des Invités
+{% endblock %}
+
+{% block body %}
+<a href="{{ path("iut_nuptias_organisation") }}" class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
+  <h1> Dresser votre liste d'invités </h1>
+  <p> Entrez l'adresse mail ainsi que
+      le nom des personnes que vous désirez inviter
+      et nous nous chargerons de le faire avec une annonce
+      que vous pourrez modifier si vous le souhaiter.
+  </p>
+
+  <div class="row">
+    ici formulaire pour ajouter une personne
+  </div>
+
+  <h2> Invités enregistrés: </h2>
+
+  <div class="row">
+    ici Récapitulatif des personnes invités
+  </div>
+
+  <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</button>
+
+  <h2> Invitations déja envoyés : </h2>
+
+  <div class="row">
+    ici Récapitulatif des Invitations
+  </div>
+
+  <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-cog"></span> Modifier l'annonce</button>
+
+
+{% endblock %}

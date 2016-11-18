@@ -15,4 +15,16 @@ class NuptiasController extends Controller
     {
         return $this->render('IUTNuptiasBundle:Nuptias:pack.html.twig');
     }
+
+    public function DashBoardAction() {
+        return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig');
+    }
+
+    public function organisationAction() {
+        return $this->render('IUTNuptiasBundle:Nuptias:Org.html.twig');
+    }
+
+    public function invitesAction() {
+        return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig');
+    }
 }
