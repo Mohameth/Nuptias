@@ -1,0 +1,6 @@
+.col-md-4 {
+  /*height: 25em;*/
+  background-clip: content-box;/*Pour que le background ignore le padding*/
+
+  background-color: AliceBlue;
+}
