@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="admin")
  * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\AdminRepository")
  */
-class Admin extends User
+class Admin
 {
     /**
      * @var int
@@ -19,7 +19,21 @@ class Admin extends User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=35, unique=true)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mdp", type="string", length=35, unique=true)
+     */
+    private $mdp;
 
 
     /**
@@ -31,4 +45,53 @@ class Admin extends User
     {
         return $this->id;
     }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Admin
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set mdp
+     *
+     * @param string $mdp
+     *
+     * @return Admin
+     */
+    public function setMdp($mdp)
+    {
+        $this->mdp = $mdp;
+
+        return $this;
+    }
+
+    /**
+     * Get mdp
+     *
+     * @return string
+     */
+    public function getMdp()
+    {
+        return $this->mdp;
+    }
 }
+
