@@ -39,7 +39,15 @@
               <li><a href="{{ path('iut_nuptias_packs') }}">Créez votre mariage</a></li>
               <li><a href="#">Nos prestataires</a></li>
               <li><a href="#">Contact</a></li>
-              <li><a href="{{ path('fos_user_register') }}">Inscription/Connexion</a></li>
+              <li>
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <a href="{{ path('fos_user_security_logout') }}">
+                      {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                  </a>
+              {% else %}
+              <a href="{{ path('fos_user_registration_register') }}">Inscription/Connexion</a>
+              {% endif %}
+              </li>
 
             </ul>
           </div><!-- /.navbar-collapse -->

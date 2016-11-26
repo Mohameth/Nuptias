@@ -25,8 +25,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-                login_path: 
-            anonymous: ~
+                login_path: /inscription
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -34,11 +33,14 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            logout: true
+            logout:
+              path: /deconnexion
+              target: /
             anonymous: true
         default:
             anonymous: ~
             http_basic: ~
 
     access_control:
-        - { path: ^/packs, roles: ROLE_USER }
+        - { path: ^/packs, role: ROLE_USER }
+        - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
