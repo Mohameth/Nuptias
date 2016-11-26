@@ -26,3 +26,9 @@ iut_nuptias_invites:
     path:    /organisation/invites
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:invites
+
+iut_nuptias_inscription:
+    path: /inscription
+
+fos_user_register:
+    path: /inscription
