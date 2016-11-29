@@ -9,23 +9,24 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
-        in_memory:
-            memory: ~
+        #in_memory:
+        #    memory: ~
         fos_userbundle:
             id: fos_user.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+        #dev:
+        #    pattern: ^/(_(profiler|wdt)|css|images|js)/
+        #    security: false
 
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-                login_path: /inscription
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -34,13 +35,15 @@ security:
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             logout:
-              path: /deconnexion
-              target: /
+                path: /deconnexion
+                target: /
             anonymous: true
-        default:
-            anonymous: ~
-            http_basic: ~
+        #default:
+        #    anonymous: ~
+        #    http_basic: ~
 
     access_control:
         - { path: ^/packs, role: ROLE_USER }
         - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }

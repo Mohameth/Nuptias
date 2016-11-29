@@ -1,35 +1,36 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+
 <form action="{{ path('fos_user_registration_register') }}" method="post" id="form-register register" class="form-horizontal" >
   <fieldset>
     <legend>Inscription</legend>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="email">Email : </label>
+      <label class="control-label col-sm-2" for="email">{{ 'form.email'|trans }}</label>
       <div class="col-sm-10">
-        {{ form_widget(form.email, {required: false}) }}
+        {{ form_widget(form.email) }}
       </div>
     </div>
 
 
     <div class="form-group">
-      <label class="control-label col-sm-2" for="username">Nom d'utilisateur : </label>
+      <label class="control-label col-sm-2" for="username">{{ 'form.username'|trans }}</label>
       <div class="col-sm-10">
-        {{ form_widget(form.username, {required: false}) }}
+        {{ form_widget(form.username) }}
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2" for="password">Mot de passe : </label>
+      <label class="control-label col-sm-2" for="password">{{ 'form.new_password'|trans }}</label>
       <div class="col-sm-10">
-        {{ form_widget(form.plainPassword.first, {required: false}) }}
+        {{ form_widget(form.plainPassword.first) }}
       </div>
     </div>
 
     <div class="form-group">
       {#{ form_label (form.plainPassword.second, {'attr': {'class': 'control-label col-sm-2'}}) }#}
-      <label class="control-label col-sm-2" for="password">Confirmer le mot de passe : </label>
+      <label class="control-label col-sm-2" for="password">{{ 'form.new_password_confirmation'|trans }}</label>
       <div class="col-sm-10">
-        {{ form_widget(form.plainPassword.second, {required: false}) }}
+        {{ form_widget(form.plainPassword.second) }}
       </div>
     </div>
 
@@ -38,9 +39,6 @@
     </div>
     {{ form_rest(form) }}
   </fieldset>
-
-  <fieldset>
-    <legend>Connexion</legend>
-    {{ include('FOSUserBundle:Security:login.html.twig') }}
-  </fieldset>
 </form>
+
+{{ render(controller('FOSUserBundle:Security:login')) }}
