@@ -42,7 +42,6 @@ class Invite
      */
     private $reponse;
 
-
     /**
      * Get id
      *
@@ -125,4 +124,3 @@ class Invite
         return $this->reponse;
     }
 }
-

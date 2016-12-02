@@ -99,45 +99,4 @@ class Mariage
     {
         return $this->date;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->Invites = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add invite
-     *
-     * @param \IUT\NuptiasBundle\Entity\Invite $invite
-     *
-     * @return Mariage
-     */
-    public function addInvite(\IUT\NuptiasBundle\Entity\Invite $invite)
-    {
-        $this->Invites[] = $invite;
-
-        return $this;
-    }
-
-    /**
-     * Remove invite
-     *
-     * @param \IUT\NuptiasBundle\Entity\Invite $invite
-     */
-    public function removeInvite(\IUT\NuptiasBundle\Entity\Invite $invite)
-    {
-        $this->Invites->removeElement($invite);
-    }
-
-    /**
-     * Get invites
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getInvites()
-    {
-        return $this->Invites;
-    }
 }
