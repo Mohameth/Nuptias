@@ -156,4 +156,3 @@ class Service
         return $this->prix;
     }
 }
-

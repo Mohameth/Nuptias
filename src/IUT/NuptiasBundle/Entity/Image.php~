@@ -98,4 +98,28 @@ class Image
     {
         return $this->description;
     }
+
+    /**
+     * Set service
+     *
+     * @param \IUT\NuptiasBundle\Entity\Service $service
+     *
+     * @return Image
+     */
+    public function setService(\IUT\NuptiasBundle\Entity\Service $service)
+    {
+        $this->Service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return \IUT\NuptiasBundle\Entity\Service
+     */
+    public function getService()
+    {
+        return $this->Service;
+    }
 }

@@ -6,6 +6,45 @@
 
 {% block body %}
   <h1> Espace Personnel </h1>
+  <h3> Récapitulatif de votre mariage : </h3>
 
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Général</a></li>
+    <li><a data-toggle="tab" href="#invites">Invités</a></li>
+    <li><a data-toggle="tab" href="#salle">Salle</a></li>
+    <li><a data-toggle="tab" href="#traiteur">Traiteur</a></li>
+    <li><a data-toggle="tab" href="#photographe">Photographe</a></li>
+    <li><a data-toggle="tab" href="#DJ">DJ</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>Général</h3>
+      <a class="btn btn-primary btn-info"
+         href="{{ path('iut_nuptias_mariage') }}">Commencer</a>
+      <h4>Infos générales : </h4>
+      <p> Date du mariage  : </p>
+    </div>
+    <div id="invites" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Some content in menu 1.</p>
+    </div>
+    <div id="salle" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+    <div id="traiteur" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+    <div id="photographe" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+    <div id="DJ" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+  </div>
 
 {% endblock %}

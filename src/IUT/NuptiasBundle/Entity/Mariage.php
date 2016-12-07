@@ -41,6 +41,61 @@ class Mariage
     **/
     private $Invites;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbInvites", type="integer")
+     */
+    private $nbInvites;// Nombre d'invités éstimés lors du formulaire
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budget", type="integer", nullable=true)
+     */
+    private $budget;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budgetSalle", type="integer", nullable=true)
+     */
+    private $budgetSalle;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budgetTraiteur", type="integer", nullable=true)
+     */
+    private $budgetTraiteur;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budgetPhotographe", type="integer", nullable=true)
+     */
+    private $budgetPhotographe;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="budgetDJ", type="integer", nullable=true)
+     */
+    private $budgetDJ;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auteur", type="string", nullable=true)
+     */
+    private $auteur;
 
     /**
      * Get id
@@ -105,6 +160,7 @@ class Mariage
     public function __construct()
     {
         $this->Invites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nbInvites = 50;
     }
 
     /**
@@ -139,5 +195,197 @@ class Mariage
     public function getInvites()
     {
         return $this->Invites;
+    }
+
+    /**
+     * Set nbInvites
+     *
+     * @param integer $nbInvites
+     *
+     * @return Mariage
+     */
+    public function setNbInvites($nbInvites)
+    {
+        $this->nbInvites = $nbInvites;
+
+        return $this;
+    }
+
+    /**
+     * Get nbInvites
+     *
+     * @return integer
+     */
+    public function getNbInvites()
+    {
+        return $this->nbInvites;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Mariage
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param string $auteur
+     *
+     * @return Mariage
+     */
+    public function setAuteur($auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return string
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param integer $budget
+     *
+     * @return Mariage
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return integer
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    /**
+     * Set budgetSalle
+     *
+     * @param integer $budgetSalle
+     *
+     * @return Mariage
+     */
+    public function setBudgetSalle($budgetSalle)
+    {
+        $this->budgetSalle = $budgetSalle;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetSalle
+     *
+     * @return integer
+     */
+    public function getBudgetSalle()
+    {
+        return $this->budgetSalle;
+    }
+
+    /**
+     * Set budgetTraiteur
+     *
+     * @param integer $budgetTraiteur
+     *
+     * @return Mariage
+     */
+    public function setBudgetTraiteur($budgetTraiteur)
+    {
+        $this->budgetTraiteur = $budgetTraiteur;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetTraiteur
+     *
+     * @return integer
+     */
+    public function getBudgetTraiteur()
+    {
+        return $this->budgetTraiteur;
+    }
+
+    /**
+     * Set budgetPhotographe
+     *
+     * @param integer $budgetPhotographe
+     *
+     * @return Mariage
+     */
+    public function setBudgetPhotographe($budgetPhotographe)
+    {
+        $this->budgetPhotographe = $budgetPhotographe;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetPhotographe
+     *
+     * @return integer
+     */
+    public function getBudgetPhotographe()
+    {
+        return $this->budgetPhotographe;
+    }
+
+    /**
+     * Set budgetDJ
+     *
+     * @param integer $budgetDJ
+     *
+     * @return Mariage
+     */
+    public function setBudgetDJ($budgetDJ)
+    {
+        $this->budgetDJ = $budgetDJ;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetDJ
+     *
+     * @return integer
+     */
+    public function getBudgetDJ()
+    {
+        return $this->budgetDJ;
     }
 }

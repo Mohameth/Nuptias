@@ -13,7 +13,7 @@ iut_nuptias_packs:
         _controller: IUTNuptiasBundle:Nuptias:pack
 
 iut_nuptias_dashBoard:
-    path:    /DashBoard
+    path:    /dashboard
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:DashBoard
 
@@ -26,3 +26,8 @@ iut_nuptias_invites:
     path:    /organisation/invites
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:invites
+
+iut_nuptias_mariage:
+    path:    /organisation/mariage
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:mariage
