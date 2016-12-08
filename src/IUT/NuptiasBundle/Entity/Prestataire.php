@@ -10,17 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="prestataire")
  * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\PrestataireRepository")
  */
-class Prestataire
+class Prestataire extends User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @var string
      *
@@ -28,13 +19,33 @@ class Prestataire
      */
     private $tel;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        $this->roles = "Prestataire";
+    }
+
+    /**
+     * Set tel
+     *
+     * @param string $tel
+     *
+     * @return Prestataire
+     */
+    public function setTel($tel)
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    /**
+     * Get tel
+     *
+     * @return string
+     */
+    public function getTel()
+    {
+        return $this->tel;
     }
 }
