@@ -3,19 +3,20 @@
 namespace IUT\NuptiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
 
 /**
- * Client
- *
+ * @ORM\Entity
  * @ORM\Table(name="client")
- * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\ClientRepository")
+ * @UniqueEntity(fields = "username", targetClass = "IUT\NuptiasBundle\Entity\User", message="fos_user.username.already_used")
+ * @UniqueEntity(fields = "email", targetClass = "IUT\NuptiasBundle\Entity\User", message="fos_user.email.already_used")
  */
-class Client Extends User
+class Client extends User
 {
-  public function __construct()
-  {
-      parent::__construct();
-      $this->roles = "Organisateur";
-  }
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 }

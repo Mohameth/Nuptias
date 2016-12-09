@@ -25,10 +25,6 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /
 
-fos_user_registration_register:
-    path:      /inscription
-    defaults:  { _controller: FOSUserBundle:Registration:register }
-
 fos_user_security_login:
     path: /inscription
     defaults: { _controller: FOSUserBundle:Security:login }
@@ -36,3 +32,15 @@ fos_user_security_login:
 fos_user_security_logout:
     path: /deconnexion
     defaults: { _controller: FOSUserBundle:Security:logout }
+
+admin_registration:
+    path:  /register/admin
+    defaults: { _controller: IUTNuptiasBundle:RegistrationAdmin:register }
+
+client_registration:
+    path:  /register/client
+    defaults: { _controller: IUTNuptiasBundle:RegistrationClient:register }
+
+prestataire_registration:
+    path:  /register/prestataire
+    defaults: { _controller: IUTNuptiasBundle:RegistrationPrestataire:register }

@@ -75,3 +75,44 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: IUT\NuptiasBundle\Entity\User
+    service:
+        user_manager: pugx_user_manager
+
+#PUGX
+pugx_multi_user:
+  users:
+    admin:
+        entity:
+          class: IUT\NuptiasBundle\Entity\Admin
+#          factory:
+        registration:
+          form:
+            type: FOS\UserBundle\Form\Type\RegistrationFormType
+            name: fos_user_registration_form
+            validation_groups:  [Registration, Default]
+          template: FOSUserBundle:Registration:admin.form.html.twig
+        profile:
+          form:
+            type: FOS\UserBundle\Form\Type\ProfileFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    client:
+        entity:
+          class: IUT\NuptiasBundle\Entity\Client
+        registration:
+          form:
+            type: FOS\UserBundle\Form\Type\RegistrationFormType
+          template: FOSUserBundle:Registration:client.form.html.twig
+        profile:
+          form:
+            type: FOS\UserBundle\Form\Type\ProfileFormType
+    prestataire:
+        entity:
+          class: IUT\NuptiasBundle\Entity\Prestataire
+        registration:
+          form:
+            type: FOS\UserBundle\Form\Type\RegistrationFormType
+          template: FOSUserBundle:Registration:prestataire.form.html.twig
+        profile:
+          form:
+            type: FOS\UserBundle\Form\Type\ProfileFormType

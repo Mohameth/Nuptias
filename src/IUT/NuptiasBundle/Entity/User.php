@@ -3,14 +3,18 @@
 
 namespace IUT\NuptiasBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="user")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"user_one" = "Admin", "user_two" = "Client", "user_three" = "Prestataire" })
+ *
  */
-class User extends BaseUser
+abstract class User extends BaseUser
 {
     /**
      * @ORM\Id
@@ -18,10 +22,4 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
 }
