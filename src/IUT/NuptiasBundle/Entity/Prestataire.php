@@ -50,7 +50,7 @@ class Prestataire
     /**
      * @var int
      *
-     * @ORM\Column(name="codePostal", type="int", length=35, unique=true)
+     * @ORM\Column(name="codePostal", type="integer", length=35, unique=true)
      */
     private $codePostal;
 
