@@ -49,27 +49,4 @@ class Prestataire extends User
         return $this->tel;
     }
 
-    /**
-     * Set tel
-     *
-     * @param string $tel
-     *
-     * @return Prestataire
-     */
-    public function setTel($tel)
-    {
-        $this->tel = $tel;
-
-        return $this;
-    }
-
-    /**
-     * Get tel
-     *
-     * @return string
-     */
-    public function getTel()
-    {
-        return $this->tel;
-    }
 }
