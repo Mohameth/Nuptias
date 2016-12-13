@@ -11,26 +11,15 @@ use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields = "username", targetClass = "IUT\NuptiasBundle\Entity\User", message="fos_user.username.already_used")
  * @UniqueEntity(fields = "email", targetClass = "IUT\NuptiasBundle\Entity\User", message="fos_user.email.already_used")
  */
-class Prestataire
+class Prestataire extends User
 {
-<<<<<<< HEAD
 
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-=======
   /**
    * @ORM\Id
    * @ORM\Column(type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   protected $id;
->>>>>>> f665beb44a76f5c6d29c23a98aed3fb5c96b132e
 
     /**
      * @var string
@@ -40,15 +29,8 @@ class Prestataire
 
     private $tel;
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->roles = "Prestataire";
-    }
-
-
     /**
-     * @var string
+     *@var string
      *
      * @ORM\Column(name="nom", type="string", length=65)
      */
@@ -61,8 +43,6 @@ class Prestataire
      */
     private $rue;
 
-<<<<<<< HEAD
-=======
     /**
      * @var int
      *
@@ -79,6 +59,5 @@ class Prestataire
     {
         return $this->id;
     }
->>>>>>> f665beb44a76f5c6d29c23a98aed3fb5c96b132e
 
 }
