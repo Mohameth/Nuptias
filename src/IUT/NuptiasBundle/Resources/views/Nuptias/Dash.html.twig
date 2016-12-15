@@ -8,6 +8,39 @@
   <h1> Espace Personnel </h1>
   <h3> Récapitulatif de votre mariage : </h3>
 
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<!--Si la personne n'est pas connecté!-->
+    <ul class="nav nav-tabs">
+  {% else %}
+  <!-- TODO : Rajouter la popup -->
+  <script>
+      $('.myModal').modal('show');
+  </script>
+<div class="modal fade in" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <p> Inscrivez-vous maintenant pour organiser rapidement et facilement votre
+        fête de mariage, ne perdez plus une seconde !
+    </p>
+    <ul class="nav nav-tabs" style=" -webkit-filter: blur(2px); filter: blur(2px);">
+  {% endif %}
+
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Général</a></li>
     <li><a data-toggle="tab" href="#invites">Invités</a></li>
@@ -16,6 +49,7 @@
     <li><a data-toggle="tab" href="#photographe">Photographe</a></li>
     <li><a data-toggle="tab" href="#DJ">DJ</a></li>
   </ul>
+
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
