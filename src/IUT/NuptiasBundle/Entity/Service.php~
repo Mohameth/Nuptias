@@ -22,7 +22,7 @@ class Service
     private $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="IUT\NuptiasBundle\Entity\Prestataire")
+   * @ORM\ManyToOne(targetEntity="OC\PlatformBundle\Entity\Prestataire")
    * @ORM\JoinColumn(nullable=false)
    */
   private $prestataire;
@@ -162,29 +162,5 @@ class Service
     public function getPrix()
     {
         return $this->prix;
-    }
-
-    /**
-     * Set prestataire
-     *
-     * @param \OC\PlatformBundle\Entity\Prestataire $prestataire
-     *
-     * @return Service
-     */
-    public function setPrestataire(\OC\PlatformBundle\Entity\Prestataire $prestataire)
-    {
-        $this->prestataire = $prestataire;
-
-        return $this;
-    }
-
-    /**
-     * Get prestataire
-     *
-     * @return \OC\PlatformBundle\Entity\Prestataire
-     */
-    public function getPrestataire()
-    {
-        return $this->prestataire;
     }
 }

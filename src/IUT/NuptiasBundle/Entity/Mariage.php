@@ -22,6 +22,12 @@ class Mariage
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="IUT\NuptiasBundle\Entity\Client")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="Ville", type="string", length=35)
@@ -89,13 +95,6 @@ class Mariage
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="auteur", type="string", nullable=true)
-     */
-    private $auteur;
 
     /**
      * Get id
@@ -245,29 +244,7 @@ class Mariage
         return $this->description;
     }
 
-    /**
-     * Set auteur
-     *
-     * @param string $auteur
-     *
-     * @return Mariage
-     */
-    public function setAuteur($auteur)
-    {
-        $this->auteur = $auteur;
-
-        return $this;
-    }
-
-    /**
-     * Get auteur
-     *
-     * @return string
-     */
-    public function getAuteur()
-    {
-        return $this->auteur;
-    }
+    
 
     /**
      * Set budget
@@ -387,5 +364,29 @@ class Mariage
     public function getBudgetDJ()
     {
         return $this->budgetDJ;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \OC\PlatformBundle\Entity\Client $client
+     *
+     * @return Mariage
+     */
+    public function setClient(\OC\PlatformBundle\Entity\Client $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \OC\PlatformBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

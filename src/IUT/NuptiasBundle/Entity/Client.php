@@ -19,4 +19,45 @@ class Client extends User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+   * @ORM\ManyToMany(targetEntity="IUT\NuptiasBundle\Entity\Service", cascade={"persist"})
+   */
+   private $services;
+
+
+
+    /**
+     * Add service
+     *
+     * @param \OC\PlatformBundle\Entity\Service $service
+     *
+     * @return Client
+     */
+    public function addService(\OC\PlatformBundle\Entity\Service $service)
+    {
+        $this->services[] = $service;
+
+        return $this;
+    }
+
+    /**
+     * Remove service
+     *
+     * @param \OC\PlatformBundle\Entity\Service $service
+     */
+    public function removeService(\OC\PlatformBundle\Entity\Service $service)
+    {
+        $this->services->removeElement($service);
+    }
+
+    /**
+     * Get services
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
 }

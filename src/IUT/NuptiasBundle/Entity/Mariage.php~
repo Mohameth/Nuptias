@@ -22,6 +22,12 @@ class Mariage
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="OC\PlatformBundle\Entity\Client")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="Ville", type="string", length=35)
@@ -267,5 +273,149 @@ class Mariage
     public function getAuteur()
     {
         return $this->auteur;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param integer $budget
+     *
+     * @return Mariage
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return integer
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    /**
+     * Set budgetSalle
+     *
+     * @param integer $budgetSalle
+     *
+     * @return Mariage
+     */
+    public function setBudgetSalle($budgetSalle)
+    {
+        $this->budgetSalle = $budgetSalle;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetSalle
+     *
+     * @return integer
+     */
+    public function getBudgetSalle()
+    {
+        return $this->budgetSalle;
+    }
+
+    /**
+     * Set budgetTraiteur
+     *
+     * @param integer $budgetTraiteur
+     *
+     * @return Mariage
+     */
+    public function setBudgetTraiteur($budgetTraiteur)
+    {
+        $this->budgetTraiteur = $budgetTraiteur;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetTraiteur
+     *
+     * @return integer
+     */
+    public function getBudgetTraiteur()
+    {
+        return $this->budgetTraiteur;
+    }
+
+    /**
+     * Set budgetPhotographe
+     *
+     * @param integer $budgetPhotographe
+     *
+     * @return Mariage
+     */
+    public function setBudgetPhotographe($budgetPhotographe)
+    {
+        $this->budgetPhotographe = $budgetPhotographe;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetPhotographe
+     *
+     * @return integer
+     */
+    public function getBudgetPhotographe()
+    {
+        return $this->budgetPhotographe;
+    }
+
+    /**
+     * Set budgetDJ
+     *
+     * @param integer $budgetDJ
+     *
+     * @return Mariage
+     */
+    public function setBudgetDJ($budgetDJ)
+    {
+        $this->budgetDJ = $budgetDJ;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetDJ
+     *
+     * @return integer
+     */
+    public function getBudgetDJ()
+    {
+        return $this->budgetDJ;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \OC\PlatformBundle\Entity\Client $client
+     *
+     * @return Mariage
+     */
+    public function setClient(\OC\PlatformBundle\Entity\Client $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \OC\PlatformBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }
