@@ -171,7 +171,7 @@ class Service
      *
      * @return Service
      */
-    public function setPrestataire(\OC\PlatformBundle\Entity\Prestataire $prestataire)
+    public function setPrestataire(\IUT\NuptiasBundle\Entity\Prestataire $prestataire)
     {
         $this->prestataire = $prestataire;
 

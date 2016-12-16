@@ -46,7 +46,7 @@ class Client extends User
      *
      * @param \OC\PlatformBundle\Entity\Service $service
      */
-    public function removeService(\OC\PlatformBundle\Entity\Service $service)
+    public function removeService(\IUT\NuptiasBundle\Entity\Service $service)
     {
         $this->services->removeElement($service);
     }

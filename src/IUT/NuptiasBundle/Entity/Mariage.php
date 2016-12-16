@@ -244,7 +244,7 @@ class Mariage
         return $this->description;
     }
 
-    
+
 
     /**
      * Set budget
@@ -373,7 +373,7 @@ class Mariage
      *
      * @return Mariage
      */
-    public function setClient(\OC\PlatformBundle\Entity\Client $client)
+    public function setClient(\IUT\NuptiasBundle\Entity\Client $client)
     {
         $this->client = $client;
 
