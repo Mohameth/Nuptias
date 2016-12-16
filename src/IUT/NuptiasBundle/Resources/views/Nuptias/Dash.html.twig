@@ -22,10 +22,10 @@
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h3>Général</h3>
-      {% if listeMariage == false %}
+      {% if mariage == false %}
          <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Commencer</a>
       {% else %}
-        {% for mariage in listeMariage %}
+
 
           <h4>Infos générales : </h4>
           <p> Date du mariage  : {{ mariage.date|date('d/m/Y') }}</p>
@@ -46,7 +46,6 @@
             <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
           {% endif %}
 
-        {% endfor %}
         <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Ajouter un autre mariage</a>
       {% endif %}
     </div>
@@ -55,12 +54,8 @@
 
     <div id="invites" class="tab-pane fade">
       <h3>Gestion des invites </h3>
-      {% if listeMariage %}
-        {% for mariage in listeMariage %}
+      {% if mariage %}
           <p> Nombre d'invités : {{ mariage.nbInvites }}</p>
-
-
-        {% endfor %}
       {% endif %}
     </div>
 
@@ -68,14 +63,8 @@
 
     <div id="salle" class="tab-pane fade">
       <h3>Gestion de la salle </h3>
-      {% if listeMariage %}
-        {% for mariage in listeMariage %}
-
-          {% if mariage.budgetSalle %}
-            <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
-          {% endif %}
-
-        {% endfor %}
+      {% if mariage and mariage.budgetSalle %}
+        <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
       {% endif %}
     </div>
 
@@ -83,14 +72,8 @@
 
     <div id="traiteur" class="tab-pane fade">
       <h3>Gestion du traiteur </h3>
-      {% if listeMariage %}
-        {% for mariage in listeMariage %}
-
-        {% if mariage.budgetTraiteur %}
-          <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
-        {% endif %}
-
-        {% endfor %}
+      {% if mariage and mariage.budgetTraiteur %}
+        <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
       {% endif %}
     </div>
 
@@ -98,14 +81,8 @@
 
     <div id="photographe" class="tab-pane fade">
       <h3>Gestion du photographe </h3>
-      {% if listeMariage %}
-        {% for mariage in listeMariage %}
-
-        {% if mariage.budgetPhotographe %}
-          <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
-        {% endif %}
-
-        {% endfor %}
+      {% if mariage and mariage.budgetPhotographe %}
+        <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
       {% endif %}
     </div>
 
@@ -113,14 +90,8 @@
 
     <div id="DJ" class="tab-pane fade">
       <h3>Gestion du DJ </h3>
-      {% if listeMariage %}
-        {% for mariage in listeMariage %}
-
-        {% if mariage.budgetDJ %}
-          <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
-        {% endif %}
-
-        {% endfor %}
+      {% if mariage and mariage.budgetDJ %}
+        <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
       {% endif %}
     </div>
   </div>

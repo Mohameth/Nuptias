@@ -19,7 +19,7 @@
                   <p> Date : {{ mariage.date|date('d/m/Y') }}</p>
                   <p> Ville : {{ mariage.ville }} </p>
 
-                  <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_dashBoard', {'listeMariage': {{ mariage }}}) }}">Modifier</a>
+                  <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_dashBoard', {'id': mariage.id }) }}">Modifier</a>
               </div>
       </div>
     </div>

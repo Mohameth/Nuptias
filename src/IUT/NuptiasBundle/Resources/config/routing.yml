@@ -13,9 +13,12 @@ iut_nuptias_packs:
         _controller: IUTNuptiasBundle:Nuptias:pack
 
 iut_nuptias_dashBoard:
-    path:    /dashboard
+    path:    /dashboard/{id}
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:DashBoard
+        id: 0
+    requirements:
+        year:   \d*
 
 iut_nuptias_organisation:
     path:    /organisation

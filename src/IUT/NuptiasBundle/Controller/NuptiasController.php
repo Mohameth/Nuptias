@@ -30,20 +30,42 @@ class NuptiasController extends Controller
         return $this->render('IUTNuptiasBundle:Nuptias:pack.html.twig');
     }
 
-    public function DashBoardAction(Request $request) {
+    /**
+    * Prend en paramètre un id de mariage
+    * Si celui ci vaut 0, on renvoie l'utilisateur sur une page ou il pourra
+    * choisir le mariage à modifier
+    * Sinon on le redirige vers le mariage d'identifiant donnée.
+    */
+    public function DashBoardAction($id = 0) {
+        //Recupération de l'utilisateur
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-
         $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+
+        //Redirection vers le mariage d'identifant donnée
+        if ($id != 0) {
+          $mariage = $repository->find($id);
+          return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
+            'mariage' => $mariage));
+        }
+
+        //Récupération de la liste de tous les mariages
         $listeMariage = $repository->findBy(
           array('client' => $user->getId()),
           array('date' => 'desc')
         );
 
-        if ($listeMariage > 1)
+        if ($listeMariage == null) {
+          return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
+              'mariage' => null));
+        }
+        //Si il y a plus d'un mariage on doit choisir lequel gérer
+        if (count($listeMariage) > 1)
           return $this->render('IUTNuptiasBundle:Nuptias:mariages.html.twig', array(
               'listeMariage' => $listeMariage));
+
+        //Sinon on le redirige vers le seul mariage entamé.
         return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
-            'listeMariage' => $listeMariage));
+            'mariage' => $listeMariage[0]));
     }
 
     public function organisationAction() {
