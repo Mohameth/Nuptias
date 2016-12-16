@@ -30,8 +30,20 @@ class NuptiasController extends Controller
         return $this->render('IUTNuptiasBundle:Nuptias:pack.html.twig');
     }
 
-    public function DashBoardAction() {
-        return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig');
+    public function DashBoardAction(Request $request) {
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+        $listeMariage = $repository->findBy(
+          array('client' => $user->getId()),
+          array('date' => 'desc')
+        );
+
+        if ($listeMariage > 1)
+          return $this->render('IUTNuptiasBundle:Nuptias:mariages.html.twig', array(
+              'listeMariage' => $listeMariage));
+        return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
+            'listeMariage' => $listeMariage));
     }
 
     public function organisationAction() {
@@ -68,7 +80,8 @@ class NuptiasController extends Controller
           $em->flush();
 
           $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-          return $this->redirectToRoute('iut_nuptias_dashBoard', array('id' => $mariage->getId()));
+          //return $this->redirectToRoute('iut_nuptias_dashBoard', array('id' => $mariage->getId()));
+          return $this->DashBoardAction();
         }
       }
 
