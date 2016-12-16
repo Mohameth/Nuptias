@@ -11,10 +11,7 @@
   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<!--Si la personne n'est pas connecté!-->
     <ul class="nav nav-tabs">
   {% else %}
-  <!-- TODO : Rajouter la popup -->
-  <script>
-      $('.myModal').modal('show');
-  </script>
+
 <div class="modal fade in" id="myModal" role="dialog">
   <div class="modal-dialog">
 

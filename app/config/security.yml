@@ -44,7 +44,7 @@ security:
 
     access_control:
         - { path: ^/packs, role: ROLE_USER }
-        - { path: ^/DashBoard, role: ROLE_USER }
+        - { path: ^/dashboard, role: ROLE_USER }
         - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }

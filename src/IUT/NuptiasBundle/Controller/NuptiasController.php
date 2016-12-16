@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 //Inclusion des classes (entity) pour gérer les données
 use IUT\NuptiasBundle\Entity\Mariage;
+use IUT\NuptiasBundle\Form\MariageType;
 
 class NuptiasController extends Controller
 {
@@ -46,21 +47,13 @@ class NuptiasController extends Controller
 
       $mariage = new Mariage();
       $mariage->setNbInvites(50);//Par défaut 50 invités
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+      $mariage->setClient($user);
 
       // Création du formulaire de création de mariage
-      $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $mariage);
-      $formBuilder
-        ->add('date',               DateType::class)
-        ->add('ville',              TextType::class)
-        ->add('nbInvites',          IntegerType::class)
-        ->add('description',        TextareaType::class, array('required' => false))
-        ->add('budget',             IntegerType::class)
-        ->add('budgetSalle',        IntegerType::class, array('required' => false))
-        ->add('budgetTraiteur',     IntegerType::class, array('required' => false))
-        ->add('budgetPhotographe',  IntegerType::class, array('required' => false))
-        ->add('budgetDJ',           IntegerType::class, array('required' => false))
-        ->add('Enregistrer et voir le récapitulatif',      SubmitType::class);
-      $form = $formBuilder->getForm();
+      $form = $this->get('form.factory')->create(MariageType::class, $mariage);
+
 
       // Le bouton "submit" a rechargé la page avec toutes les infos (en POST)
       // Il faut les enregistrer
