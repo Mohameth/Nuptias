@@ -36,6 +36,13 @@ class Prestataire extends User
     private $nom;
 
     /**
+     *@var string
+     *
+     * @ORM\Column(name="ville", type="string", length=65)
+     */
+    private $ville;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="rue", type="string", length=255)
@@ -154,5 +161,29 @@ class Prestataire extends User
     public function getCodePostal()
     {
         return $this->codePostal;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param string $ville
+     *
+     * @return Prestataire
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return string
+     */
+    public function getVille()
+    {
+        return $this->ville;
     }
 }

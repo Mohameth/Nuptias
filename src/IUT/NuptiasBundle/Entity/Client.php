@@ -30,11 +30,11 @@ class Client extends User
     /**
      * Add service
      *
-     * @param \OC\PlatformBundle\Entity\Service $service
+     * @param \IUT\NuptiasBundle\Entity\Service $service
      *
      * @return Client
      */
-    public function addService(\OC\PlatformBundle\Entity\Service $service)
+    public function addService(\IUT\NuptiasBundle\Entity\Service $service)
     {
         $this->services[] = $service;
 
@@ -44,7 +44,7 @@ class Client extends User
     /**
      * Remove service
      *
-     * @param \OC\PlatformBundle\Entity\Service $service
+     * @param \IUT\NuptiasBundle\Entity\Service $service
      */
     public function removeService(\IUT\NuptiasBundle\Entity\Service $service)
     {

@@ -36,6 +36,13 @@ class Prestataire extends User
     private $nom;
 
     /**
+     *@var string
+     *
+     * @ORM\Column(name="ville", type="string", length=65)
+     */
+    private $ville;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="rue", type="string", length=255)

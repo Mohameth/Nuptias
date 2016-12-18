@@ -26,21 +26,21 @@ fos_user_change_password:
     prefix: /
 
 fos_user_security_login:
-    path: /inscription
-    defaults: { _controller: FOSUserBundle:Security:login }
+    path: /inscription/client
+    defaults: { _controller: IUTNuptiasBundle:RegistrationClient:register }
 
 fos_user_security_logout:
     path: /deconnexion
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 admin_registration:
-    path:  /register/admin
+    path:  /inscription/admin
     defaults: { _controller: IUTNuptiasBundle:RegistrationAdmin:register }
 
 client_registration:
-    path:  /register/client
+    path:  /inscription/client
     defaults: { _controller: IUTNuptiasBundle:RegistrationClient:register }
 
 prestataire_registration:
-    path:  /register/prestataire
+    path:  /inscription/prestataire
     defaults: { _controller: IUTNuptiasBundle:RegistrationPrestataire:register }

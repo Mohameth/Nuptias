@@ -18,7 +18,7 @@ iut_nuptias_dashBoard:
         _controller: IUTNuptiasBundle:Nuptias:DashBoard
         id: 0
     requirements:
-        year:   \d*
+        id:   \d*
 
 iut_nuptias_organisation:
     path:    /organisation
@@ -31,6 +31,14 @@ iut_nuptias_invites:
         _controller: IUTNuptiasBundle:Nuptias:invites
 
 iut_nuptias_mariage:
-    path:    /organisation/mariage
+    path:    /organisation/mariage/{pack}
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:mariage
+        pack: "All"
+
+iut_nuptias_delete_mariage:
+    path: /suppression/mariage/{id}
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:deleteMariage
+    requirements:
+        id:   \d*

@@ -8,7 +8,27 @@
   <h3>Formulaire de création de mariage</h3>
 
   <div class="well">
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+      {{ form_row(form.date) }}
+      {{ form_row(form.ville) }}
+      {{ form_row(form.nbInvites) }}
+      {{ form_row(form.description) }}
+      {{ form_row(form.budget) }}
+
+      {% if pack == "DIY" %}
+        {{ form_widget(form.budgetSalle, { 'attr': {'class': 'hide'} }) }}
+        {{ form_widget(form.budgetTraiteur, { 'attr': {'class': 'hide'} }) }}
+        {{ form_widget(form.budgetPhotographe, { 'attr': {'class': 'hide'} }) }}
+        {{ form_widget(form.budgetDJ, { 'attr': {'class': 'hide'} }) }}
+      {% else %}
+        {{ form_row(form.budgetSalle) }}
+        {{ form_row(form.budgetTraiteur) }}
+        {{ form_row(form.budgetPhotographe) }}
+        {{ form_row(form.budgetDJ) }}
+      {% endif %}
+
+    {{ form_end(form) }}
   </div>
   
 {% endblock %}

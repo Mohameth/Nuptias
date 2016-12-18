@@ -7,6 +7,14 @@
 {% block body %}
 
   <h1> Espace Personnel </h1>
+  {% if succesSuppression is defined %}
+    {% if succesSuppression == "true" %}
+      <p>Ce mariage a été supprimé avec succès</p>
+    {% else %}
+      <p>Nous sommes désolés, suite à une erreur interne votre requête n'as pu aboutir.</p>
+    {% endif %}
+  {% endif %}
+
   <h3> Récapitulatif de votre mariage : </h3>
 
   <ul class="nav nav-tabs">
@@ -23,7 +31,7 @@
     <div id="home" class="tab-pane fade in active">
       <h3>Général</h3>
       {% if mariage == false %}
-         <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Commencer</a>
+         <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_packs') }}">Commencer</a>
       {% else %}
 
 
@@ -46,7 +54,8 @@
             <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
           {% endif %}
 
-        <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Ajouter un autre mariage</a>
+        <!-- Enlever les commentaires pour permettre à un client de créer plusieurs mariages -->
+        <!-- <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Ajouter un autre mariage</a> -->
       {% endif %}
     </div>
 
@@ -94,6 +103,11 @@
         <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
       {% endif %}
     </div>
+
+    {% if mariage %}
+      <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_delete_mariage', {'id': mariage.id }) }}">Supprimer le mariage</a>
+    {% endif %}
   </div>
+
 
 {% endblock %}

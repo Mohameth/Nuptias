@@ -111,7 +111,7 @@ pugx_multi_user:
           class: IUT\NuptiasBundle\Entity\Prestataire
         registration:
           form:
-            type: FOS\UserBundle\Form\Type\RegistrationFormType
+            type: IUT\NuptiasBundle\Form\RegistrationPrestataireType
           template: FOSUserBundle:Registration:prestataire.form.html.twig
         profile:
           form:

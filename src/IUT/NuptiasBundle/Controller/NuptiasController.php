@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
+use Symfony\Component\HttpFoundation\Response;
+
 //Inclusion des classes (entity) pour gérer les données
 use IUT\NuptiasBundle\Entity\Mariage;
 use IUT\NuptiasBundle\Form\MariageType;
@@ -76,8 +78,49 @@ class NuptiasController extends Controller
         return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig');
     }
 
+    public function deleteMariageAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
+
+        //Récupération du mariage
+        if ($id != 0) {
+            $mariage = $repository->find($id);
+            if($mariage != null) {
+                $em->remove($mariage);
+                $em->flush();
+                return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
+                    'mariage' => null,
+                    'succesSuppression' => "true"));
+            }
+
+
+        }
+        return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array('succesSupression' => "false"));
+    }
+
     public function mariageAction(Request $request) {
-      //TODO: Check si la personne est connecté et à déjà un mariage
+
+      //On vérifie si un utilisateur est connecté
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+      //Si oui, on vérifie que c'est un client qui n'a pas déjà crée de mariage
+      if ($user != null) {
+        //Il faut que cela soit un client
+        if (get_class($user) != 'IUT\NuptiasBundle\Entity\Client') {
+          return new Response("ERREUR : Seul un client peut créer un mariage");
+        }
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+        //On recup tous ses mariages
+        $listeMariage = $repository->findBy(
+          array('client' => $user->getId()),
+          array('date' => 'desc')
+        );
+
+        if (count($listeMariage) == 1) {
+          return new Response("ERREUR : Vous ne pouvez créer qu'un seul mariage simultanéement.");
+        }
+      }
 
       $mariage = new Mariage();
       $mariage->setNbInvites(50);//Par défaut 50 invités
@@ -107,6 +150,8 @@ class NuptiasController extends Controller
         }
       }
 
-      return $this->render('IUTNuptiasBundle:Nuptias:mariage.html.twig', array('form' => $form->createView()));
+      return $this->render('IUTNuptiasBundle:Nuptias:mariage.html.twig', array(
+          'pack' => $request->attributes->get('pack'),
+          'form' => $form->createView()));
     }
 }

@@ -2,11 +2,18 @@
 
 {% block fos_user_content %}
     {% trans_default_domain 'FOSUserBundle' %}
-<h1>Incripion en tant que Client</h1>
+
+
+    <h1>Inscrivez-vous et organisez votre mariage maintenant !</h1>
+    <h4><a href="{{ path('prestataire_registration') }}">Si vous êtes un prestataire cliquez ici</a></h4>
+
     <form action="{{ path('client_registration') }}" method="POST">
         {{ form_widget(form) }}
         <div>
             <input type="submit" value="{{ 'registration.submit'|trans }}" />
         </div>
     </form>
+
+    {{ render(controller('FOSUserBundle:Security:login')) }}
+
 {% endblock fos_user_content %}

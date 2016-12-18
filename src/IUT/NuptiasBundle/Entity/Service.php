@@ -167,7 +167,7 @@ class Service
     /**
      * Set prestataire
      *
-     * @param \OC\PlatformBundle\Entity\Prestataire $prestataire
+     * @param \IUT\NuptiasBundle\Entity\Prestataire $prestataire
      *
      * @return Service
      */
@@ -181,7 +181,7 @@ class Service
     /**
      * Get prestataire
      *
-     * @return \OC\PlatformBundle\Entity\Prestataire
+     * @return \IUT\NuptiasBundle\Prestataire
      */
     public function getPrestataire()
     {

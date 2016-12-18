@@ -369,7 +369,7 @@ class Mariage
     /**
      * Set client
      *
-     * @param \OC\PlatformBundle\Entity\Client $client
+     * @param \IUT\NuptiasBundle\Entity\Client $client
      *
      * @return Mariage
      */
@@ -383,7 +383,7 @@ class Mariage
     /**
      * Get client
      *
-     * @return \OC\PlatformBundle\Entity\Client
+     * @return \IUT\NuptiasBundle\Entity\Client
      */
     public function getClient()
     {

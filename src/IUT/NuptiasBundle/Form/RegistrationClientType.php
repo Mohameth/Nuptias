@@ -4,13 +4,13 @@ namespace NuptiasBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RegistrationClientType extends AbstractType {
 
-  /*public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('name');
-  }*/
+  public function buildForm(FormBuilderInterface $builder, array $options) {
+    $builder->add('name', TextType::class);
+  }
 
   public function getParent() {
     return 'FOS\UserBundle\Form\Type\RegistrationFormType';
