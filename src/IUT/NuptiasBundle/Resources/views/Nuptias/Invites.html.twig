@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<a href="{{ path("iut_nuptias_organisation") }}" class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
+<a href="{{ path("iut_nuptias_dashBoard") }}" class="btn btn-primary btn-primary"><span class="glyphicon glyphicon-chevron-left"></span> Retour </a>
   <h1> Dresser votre liste d'invités </h1>
   <p> Entrez l'adresse mail ainsi que
       le nom des personnes que vous désirez inviter
@@ -13,14 +13,46 @@
       que vous pourrez modifier si vous le souhaiter.
   </p>
 
-  <div class="row">
-    ici formulaire pour ajouter une personne
-  </div>
-
   <h2> Invités enregistrés: </h2>
 
   <div class="row">
-    ici Récapitulatif des personnes invités
+    <style>
+    div#list_de_trucs{
+      margin:10px auto;
+      width:100%;
+      min-width:400px;
+      max-width:700px;
+    }
+    div#list_de_trucs table{
+      margin:0px;
+      width:100%;
+    }
+    </style>
+
+    <div id="list_de_trucs" class="table-responsive">
+      <table>
+        <tr>
+          <th>Nom</th>
+          <th>Mail</th>
+          <th>Supprimer</th>
+        </tr>
+        {% for invite in invites  %}
+            <tr>
+              <td>{{ invite.nom }} </td>
+              <td>{{ invite.mail }} </td>
+              <td> <a href="#" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
+            </tr>
+        {% endfor %}
+        <tr>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>formulaire ajout invites</td>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</button>
@@ -28,7 +60,22 @@
   <h2> Invitations déja envoyés : </h2>
 
   <div class="row">
-    ici Récapitulatif des Invitations
+    <div id="list_de_trucs" class="table-responsive">
+      <table>
+        <tr>
+          <th>Nom</th>
+          <th>Mail</th>
+          <th>Réponse</th>
+        </tr>
+        {% for invite in invites  %}
+            <tr>
+              <td>{{ invite.nom }} </td>
+              <td>{{ invite.mail }} </td>
+              <td>{{ invite.reponse }}</td>
+            </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 
   <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-cog"></span> Modifier l'annonce</button>

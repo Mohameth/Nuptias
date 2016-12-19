@@ -21,6 +21,11 @@ class Invite
      */
     private $id;
 
+
+    function __construct() {
+      $this->reponse = 'Non Envoyé';
+    }
+    
     /**
      * @var string
      *

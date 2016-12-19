@@ -79,8 +79,18 @@ class NuptiasController extends Controller
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
       $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
 
-      
-        return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig');
+      //récuperation du mariage si id présent
+      if ($id_mariage != 0) {
+        $mariage = $repository->find($id_mariage);
+      }
+      if ($mariage->getClient()->getId() != $user->getId()) {
+        return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
+      }
+
+        return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig',array(
+                              'invites' => $mariage->getInvites(),
+                              'nbInvites' => $mariage->getNbInvites())
+        );
     }
 
     public function deleteMariageAction($id) {

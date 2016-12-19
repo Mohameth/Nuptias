@@ -64,6 +64,7 @@
     <div id="invites" class="tab-pane fade">
       <h3>Gestion des invites </h3>
       {% if mariage %}
+          <a href="{{ path('iut_nuptias_invites', {'id_mariage' : mariage.id}) }}" class="btn btn-primary btn-primary">Gerez Vos Invités <span class="glyphicon glyphicon-list"></span></a>
           <p> Nombre d'invités : {{ mariage.nbInvites }}</p>
       {% endif %}
     </div>
