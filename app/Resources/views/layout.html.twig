@@ -60,13 +60,14 @@
         {% endblock %}
       </div>
 
-      <hr>
 
-      <div id="footer">
-        <div class="container text-center">
-          <p>Mentions légales © {{ 'now'|date('Y') }}</p>
-        </div>
-      </div>
+
+      <footer class="footer navbar-fixed-bottom">
+        <hr>
+          <div class="container text-center">
+            <p>Mentions légales © {{ 'now'|date('Y') }}</p>
+          </div>
+      </footer>
 
       {% block javascripts %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
