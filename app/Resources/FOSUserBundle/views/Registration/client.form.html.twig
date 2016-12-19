@@ -5,7 +5,7 @@
 
 
     <h1>Inscrivez-vous et organisez votre mariage maintenant !</h1>
-    <h4><a href="{{ path('prestataire_registration') }}">Si vous êtes un prestataire cliquez ici</a></h4>
+    <h4><strong><a class="text-warning" href="{{ path('prestataire_registration') }}">Si vous êtes un prestataire cliquez ici</a></strong></h4>
 
     <form action="{{ path('client_registration') }}" method="POST">
         {{ form_widget(form) }}
