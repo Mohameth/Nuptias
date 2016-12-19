@@ -60,7 +60,7 @@ class NuptiasController extends Controller
           return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
               'mariage' => null));
         }
-        //Si il y a plus d'un mariage on doit choisir lequel gérer
+        //Si il y a plus d'un mariage on doit choisir lequel gérer/consulter
         if (count($listeMariage) > 1)
           return $this->render('IUTNuptiasBundle:Nuptias:mariages.html.twig', array(
               'listeMariage' => $listeMariage));
@@ -74,7 +74,12 @@ class NuptiasController extends Controller
         return $this->render('IUTNuptiasBundle:Nuptias:Org.html.twig');
     }
 
-    public function invitesAction() {
+    public function invitesAction($id_mariage) {
+      //Recupération de l'utilisateur
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+      $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+
+      
         return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig');
     }
 
