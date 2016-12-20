@@ -3,6 +3,8 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+.idea/*
+.idea
 
 # Email spool folder
 /app/spool/*
@@ -98,3 +100,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 web/apple-touch-icon.png
+var/cache/

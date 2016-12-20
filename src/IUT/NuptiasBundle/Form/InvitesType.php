@@ -22,8 +22,7 @@ class InvitesType extends AbstractType
       $builder
         ->add('nom',                TextType::class)
         ->add('mail',               TextType::class)
-        ->add('nbInvites',          IntegerType::class)
-        ->add('Ajouté',             SubmitType::class);
+        ->add('Ajouter',            SubmitType::class);
       }
 
     /**

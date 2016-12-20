@@ -5,20 +5,13 @@ namespace IUT\NuptiasBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;//Pour hériter de la classe Controller
 use Symfony\Component\HttpFoundation\Request;
 
-//Inclusion des types pour les formulaires
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-
 use Symfony\Component\HttpFoundation\Response;
 
 //Inclusion des classes (entity) pour gérer les données
 use IUT\NuptiasBundle\Entity\Mariage;
 use IUT\NuptiasBundle\Form\MariageType;
+use IUT\NuptiasBundle\Entity\Invite;
+use IUT\NuptiasBundle\Form\InvitesType;
 
 class NuptiasController extends Controller
 {
@@ -74,7 +67,7 @@ class NuptiasController extends Controller
         return $this->render('IUTNuptiasBundle:Nuptias:Org.html.twig');
     }
 
-    public function invitesAction($id_mariage) {
+    public function invitesAction(Request $request, $id_mariage) {
       //Recupération de l'utilisateur
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
       $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
@@ -83,34 +76,105 @@ class NuptiasController extends Controller
       if ($id_mariage != 0) {
         $mariage = $repository->find($id_mariage);
       }
+      if ($mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
       if ($mariage->getClient()->getId() != $user->getId()) {
         return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
       }
 
-        return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig',array(
-                              'invites' => $mariage->getInvites(),
-                              'nbInvites' => $mariage->getNbInvites())
+      //Création de l'invite et de la réponse par défaut
+      $invite = new Invite();
+      $invite->setReponse("En attente");
+
+      //Création du formulaire pour cet invite
+      $form = $this->get('form.factory')->create(InvitesType::class, $invite);
+
+      //L'utilisateur a cliqué sur "Ajouter", le formulaire doit être géré.
+      if($request->isMethod('POST')) {
+        // Le formulaire hydrate la variable $mariage (et $invite aussi du coup) avec les bonnes valeurs
+        $form->handleRequest($request);
+
+        foreach ($mariage->getInvites() as $inviteTemp) {
+          if ($inviteTemp->getMail() == $invite->getMail()) {
+            return new Response("ERREUR : Un invité avec cette adresse mail a déjà été enregistré.");
+          }
+        }
+
+        if ($form->isValid()) {
+          // Enregistrement
+          $mariage->addInvite($invite);
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($mariage);
+          $em->flush();
+
+          $request->getSession()->getFlashBag()->add('notice', 'Invite bien enregistrée.');
+        }
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:Invites.html.twig',array(
+                           'form' => $form->createView(),
+                           'id_mariage' => $id_mariage,
+                           'invites' => $mariage->getInvites(),
+                           'nbInvites' => $mariage->getNbInvites())
         );
     }
 
-    public function deleteMariageAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
+    public function deleteInviteAction(Request $request, $id_mariage, $id_invite) {
+      //Recupération de l'utilisateur
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+      $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
 
-        //Récupération du mariage
-        if ($id != 0) {
-            $mariage = $repository->find($id);
-            if($mariage != null) {
-                $em->remove($mariage);
-                $em->flush();
-                return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
-                    'mariage' => null,
-                    'succesSuppression' => "true"));
+      //récuperation du mariage si id présent
+      if ($id_mariage != 0 && $id_invite != 0) {
+        $mariage = $repository->find($id_mariage);
+
+        if ($mariage != null) {
+          if ($mariage->getClient()->getId() != $user->getId()) {
+            return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
+          }
+
+          //Recherche du bon invite
+          foreach ($mariage->getInvites() as $inviteTemp) {
+            if ($inviteTemp->getId() == $id_invite) {
+              $invite = $inviteTemp;
+              break;
             }
+          }
 
+          //Si on l'a trouvé on le supprime
+          if (isset($invite)) {
+            $mariage->removeInvite($invite);
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($mariage);
+            $em->flush();
+          }
         }
-        return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array('succesSupression' => "false"));
+        else {
+          return new Response("ERREUR : Ce mariage n'existe pas/plus.");
+        }
+      }
+
+      return $this->invitesAction($request, $id_mariage);
+    }
+
+    public function deleteMariageAction($id) {
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
+
+      //Récupération du mariage
+      if ($id != 0) {
+        $mariage = $repository->find($id);
+        if ($mariage != null) {
+          $em->remove($mariage);
+          $em->flush();
+          return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array(
+                               'mariage' => null,
+                               'succesSuppression' => "true")
+          );
+        }
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:Dash.html.twig', array('succesSupression' => "false"));
     }
 
     public function mariageAction(Request $request) {
@@ -139,7 +203,6 @@ class NuptiasController extends Controller
 
       $mariage = new Mariage();
       $mariage->setNbInvites(50);//Par défaut 50 invités
-      $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
       $mariage->setClient($user);
 
@@ -159,7 +222,7 @@ class NuptiasController extends Controller
           $em->persist($mariage);
           $em->flush();
 
-          $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+          $request->getSession()->getFlashBag()->add('notice', 'Mariage bien enregistrée.');
           //return $this->redirectToRoute('iut_nuptias_dashBoard', array('id' => $mariage->getId()));
           return $this->DashBoardAction();
         }

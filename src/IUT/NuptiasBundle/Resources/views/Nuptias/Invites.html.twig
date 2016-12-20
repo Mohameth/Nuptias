@@ -40,7 +40,7 @@
             <tr>
               <td>{{ invite.nom }} </td>
               <td>{{ invite.mail }} </td>
-              <td> <a href="#" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
+              <td> <a href="{{ path('iut_nuptias_delete_invite', {'id_mariage': id_mariage, 'id_invite': invite.id}) }}" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
             </tr>
         {% endfor %}
         <tr>
@@ -48,9 +48,13 @@
           <td>-</td>
           <td>-</td>
         </tr>
+        {{ form_start(form) }}
         <tr>
-          <td>formulaire ajout invites</td>
+          <td>{{ form_errors(form.nom) }} {{ form_widget(form.nom) }}</td>
+          <td>{{ form_errors(form.mail) }} {{ form_widget(form.mail) }}</td>
+          <td>{{ form_row(form.Ajouter) }}</td>
         </tr>
+        {{ form_end(form) }}
       </table>
     </div>
   </div>

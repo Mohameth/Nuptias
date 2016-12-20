@@ -45,3 +45,13 @@ iut_nuptias_delete_mariage:
         _controller: IUTNuptiasBundle:Nuptias:deleteMariage
     requirements:
         id:   \d*
+
+iut_nuptias_delete_invite:
+    path: /suppression/invite/{id_mariage}/{id_invite}
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:deleteInvite
+        id_mariage: 0
+        id_invite: 0
+    requirements:
+        id_mariage:   \d*
+        id_invite:    \d*
