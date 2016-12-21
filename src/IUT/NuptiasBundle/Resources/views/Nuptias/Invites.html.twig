@@ -59,8 +59,7 @@
     </div>
   </div>
 
-  <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</button>
-
+  <a href="{{ path('iut_nuptias_send_invite', {'id_mariage' : id_mariage} ) }}" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</a>
   <h2> Invitations déja envoyés : </h2>
 
   <div class="row">

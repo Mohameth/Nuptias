@@ -157,6 +157,7 @@ class NuptiasController extends Controller
       return $this->invitesAction($request, $id_mariage);
     }
 
+
     public function sendInviteAction($id_mariage) {
       //Recupération de l'utilisateur
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
@@ -166,16 +167,15 @@ class NuptiasController extends Controller
       if ($id_mariage != 0) {
         $mariage = $repository->find($id_mariage);
       }
-
-      if ($mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
-
+      if (! isset($mariage) || $mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
       if ($mariage->getClient()->getId() != $user->getId()) {
         return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
       }
 
+
       //recuperation de l'instance de SwiftMailer pour ecrire un message
       $message = \Swift_Message::newInstance();
-      $message->setSubject('Invitation au mariage de ' . $user->username );
+      $message->setSubject('Invitation au mariage de ' . $user->getUsername() );
       $message->setFrom('Invitation.Mariage@Nuptias.com');
       //definition de l'objet et de l'expediteur
 
@@ -187,7 +187,7 @@ class NuptiasController extends Controller
         $message->setTo($i->getMail());
         $message->setBody(
         $this->renderView(
-                  'IUTNuptiasBundle:Nuptias:Annonce.html.twig',
+                  'IUTNuptiasBundle:Mail:Annonce.html.twig',
                   array('name' => $i->getNom())
                 ),
               'text/html'
