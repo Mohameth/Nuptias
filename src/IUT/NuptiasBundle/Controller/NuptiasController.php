@@ -157,6 +157,50 @@ class NuptiasController extends Controller
       return $this->invitesAction($request, $id_mariage);
     }
 
+    public function sendInviteAction($id_mariage) {
+      //Recupération de l'utilisateur
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+      $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+
+      //récuperation du mariage si id présent
+      if ($id_mariage != 0) {
+        $mariage = $repository->find($id_mariage);
+      }
+
+      if ($mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
+
+      if ($mariage->getClient()->getId() != $user->getId()) {
+        return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
+      }
+
+      //recuperation de l'instance de SwiftMailer pour ecrire un message
+      $message = \Swift_Message::newInstance();
+      $message->setSubject('Invitation au mariage de ' . $user->username );
+      $message->setFrom('Invitation.Mariage@Nuptias.com');
+      //definition de l'objet et de l'expediteur
+
+      //recuperation des invité
+      $invites = $mariage->getInvites();
+
+      //envoie à tous les invités enregistrer
+      foreach ($invites as $i ) {
+        $message->setTo($i->getMail());
+        $message->setBody(
+        $this->renderView(
+                  'IUTNuptiasBundle:Nuptias:Annonce.html.twig',
+                  array('name' => $i->getNom())
+                ),
+              'text/html'
+          );
+
+      $this->get('mailer')->send($message);
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:InviteSucces.html.twig');
+
+
+    }
+
     public function deleteMariageAction($id) {
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:Mariage');

@@ -55,3 +55,11 @@ iut_nuptias_delete_invite:
     requirements:
         id_mariage:   \d*
         id_invite:    \d*
+
+iut_nuptias_send_invite:
+    path: /organisation/invites/send/{id_mariage}
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:sendInvite
+        id_mariage: 0
+    requirements:
+        id_mariage:   \d*
