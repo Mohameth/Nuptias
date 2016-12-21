@@ -176,7 +176,7 @@ class NuptiasController extends Controller
       //recuperation de l'instance de SwiftMailer pour ecrire un message
       $message = \Swift_Message::newInstance();
       $message->setSubject('Invitation au mariage de ' . $user->getUsername() );
-      $message->setFrom('Invitation.Mariage@Nuptias.com');
+      $message->setFrom('invitation@tonmariagedereve.fr');
       //definition de l'objet et de l'expediteur
 
       //recuperation des invité
