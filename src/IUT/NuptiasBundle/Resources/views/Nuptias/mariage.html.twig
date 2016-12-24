@@ -10,22 +10,16 @@
   <div class="well">
     {{ form_start(form) }}
 
-      {{ form_row(form.date) }}
-      {{ form_row(form.ville) }}
-      {{ form_row(form.nbInvites) }}
-      {{ form_row(form.description) }}
-      {{ form_row(form.budget) }}
-
       {% if pack == "DIY" %}
         {{ form_widget(form.budgetSalle, { 'attr': {'class': 'hide'} }) }}
         {{ form_widget(form.budgetTraiteur, { 'attr': {'class': 'hide'} }) }}
         {{ form_widget(form.budgetPhotographe, { 'attr': {'class': 'hide'} }) }}
         {{ form_widget(form.budgetDJ, { 'attr': {'class': 'hide'} }) }}
-      {% else %}
-        {{ form_row(form.budgetSalle) }}
-        {{ form_row(form.budgetTraiteur) }}
-        {{ form_row(form.budgetPhotographe) }}
-        {{ form_row(form.budgetDJ) }}
+      {% endif %}
+
+      {% if pack == "classique" %}
+          {{ form_widget(form.budgetSalle, { 'attr': {'class': 'hide'} }) }}
+          {{ form_widget(form.budgetTraiteur, { 'attr': {'class': 'hide'} }) }}
       {% endif %}
 
     {{ form_end(form) }}

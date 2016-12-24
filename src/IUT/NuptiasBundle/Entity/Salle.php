@@ -43,4 +43,34 @@ class Salle Extends Service
     {
         return $this->capacite;
     }
-}
+
+    /**
+     * @ORM\ManyToOne(targetEntity="IUT\NuptiasBundle\Entity\Prestataire")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected  $prestataire;
+
+    /**
+     * Set prestataire
+     *
+     * @param \IUT\NuptiasBundle\Entity\Prestataire $prestataire
+     *
+     * @return Service
+     */
+    public function setPrestataire(\IUT\NuptiasBundle\Entity\Prestataire $prestataire)
+    {
+      $this->prestataire = $prestataire;
+
+      return $this;
+    }
+
+    /**
+     * Get prestataire
+     *
+     * @return \IUT\NuptiasBundle\Prestataire
+     */
+    public function getPrestataire()
+    {
+      return $this->prestataire;
+    }
+  }

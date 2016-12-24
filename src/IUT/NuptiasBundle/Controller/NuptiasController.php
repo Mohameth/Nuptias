@@ -2,9 +2,14 @@
 
 namespace IUT\NuptiasBundle\Controller;
 
+use IUT\NuptiasBundle\Entity\Service;
+use IUT\NuptiasBundle\Form\ServiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;//Pour hériter de la classe Controller
-use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 //Inclusion des classes (entity) pour gérer les données
@@ -12,6 +17,14 @@ use IUT\NuptiasBundle\Entity\Mariage;
 use IUT\NuptiasBundle\Form\MariageType;
 use IUT\NuptiasBundle\Entity\Invite;
 use IUT\NuptiasBundle\Form\InvitesType;
+use IUT\NuptiasBundle\Entity\Salle;
+use IUT\NuptiasBundle\Form\SalleType;
+use IUT\NuptiasBundle\Entity\Traiteur;
+use IUT\NuptiasBundle\Form\TraiteurType;
+use IUT\NuptiasBundle\Entity\DJ;
+use IUT\NuptiasBundle\Form\DJType;
+use IUT\NuptiasBundle\Entity\Deco;
+use IUT\NuptiasBundle\Form\DecoType;
 
 class NuptiasController extends Controller
 {
@@ -275,5 +288,103 @@ class NuptiasController extends Controller
       return $this->render('IUTNuptiasBundle:Nuptias:mariage.html.twig', array(
           'pack' => $request->attributes->get('pack'),
           'form' => $form->createView()));
+    }
+
+    public function serviceAction(Request $request) {
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+      /* TODO: Trouver ses services et les afficher, si aucun lui proposer d'en créer un nouveau */
+
+      if ($user == null) return new Response("ERREUR : Vous devez être connecté.");
+      //Récupération des services
+      //Il faut que l'utilisateur soit un prestataire
+      if (get_class($user) != 'IUT\NuptiasBundle\Entity\Prestataire') {
+        return new Response("ERREUR : Seul un prestataire peut gérer un service");
+      }
+
+      $typeService = array('Traiteur', 'Salle', 'Traiteur', 'DJ', 'Deco',);
+      $listeService = array();
+      $em = $this->getDoctrine()->getManager();
+
+      foreach ($typeService as $type) {
+        //Le repository ne se met pas à jour --
+        $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+        $listeService[] = $repository->findBy(
+          array('prestataire' => $user->getId())
+        );
+
+        //var_dump($listeService);
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:service.html.twig', array(
+        'listeService' => $listeService));
+    }
+
+    public function choixServiceAction(Request $request) {
+    //Affichage des services possibles (expanded pour afficher des radio-boutons)
+      $form = $this->createFormBuilder()
+        ->add('type', ChoiceType::class, array(
+          'choices' => array(
+            'Salle' => 'Salle',
+            'Traiteur' => 'Traiteur',
+            'DJ' => 'DJ',
+            'Decoration' => 'Deco',),
+          'expanded' => true))
+        ->add('Continuer', SubmitType::class)
+        ->getForm();
+      $form->handleRequest($request);
+
+      //Si tout est bon on le renvoie vers la page de création de service avec le bon type.
+      if ($form->isSubmitted() && $form->isValid()) {
+        $data = $form->getData();
+
+        return $this->redirectToRoute('iut_nuptias_create_service', array('type' => $data['type']));
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:choixService.html.twig', array(
+        'form' => $form->createView()
+      ));
+    }
+
+    public function createServiceAction(Request $request) {
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+      if ($user == null) return new Response("ERREUR : Vous devez vous connecter pour créer un service.");
+      //Il faut que l'utilisateur soit un prestataire
+      if (get_class($user) != 'IUT\NuptiasBundle\Entity\Prestataire') {
+        return new Response("ERREUR : Seul un prestataire peut créer un service");
+      }
+
+      $type = $request->query->get('type');
+      if (!isset($type) || $type == null) {
+        return new Response("ERREUR : Le type de service n'a pas été spécifiée");
+      }
+
+      //Création dynamique d'une instance de Service puis d'un formulaire selon le type spécifié
+      $refl = new \ReflectionClass('IUT\NuptiasBundle\Entity\\'.$type);
+      $instance = $refl->newInstance();
+      $formInstanceService = $this->get('form.factory')->create('IUT\NuptiasBundle\Form\\'.$type.'Type', $instance);
+
+
+      if($request->isMethod('POST')) {
+        // Le formulaire hydrate la variable $mariage avec les bonnes valeurs
+        $formInstanceService->handleRequest($request);
+
+        if ($formInstanceService->isValid()) {
+          // Enregistrement
+          $instance->setPrestataire($user);
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($instance);
+          $em->flush();
+
+          $request->getSession()->getFlashBag()->add('notice', 'Service bien enregistrée.');
+          //return $this->redirectToRoute('iut_nuptias_dashBoard', array('id' => $mariage->getId()));
+          return $this->redirectToRoute('iut_nuptias_service');
+        }
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:creer_service.html.twig', array(
+        'type' => $type,
+        'form' => $formInstanceService->createView()
+      ));
     }
 }

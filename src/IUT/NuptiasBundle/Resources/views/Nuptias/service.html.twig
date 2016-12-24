@@ -1,0 +1,20 @@
+
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Service
+{% endblock %}
+
+{% block body %}
+
+    {% if listeService|length == 0 %}
+        <h1>Vous ne possedez encore aucun service -- Affichage des services ne fonctionnent pas encore.</h1>
+    {% else %}
+        <h1>Voici vos service(s) :  -- Affichage des services ne fonctionnent pas encore.</h1>
+    {% endif %}
+
+    {{ dump(listeService) }}
+
+    <h2><a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_choix_service') }} ">Créer un nouveau service</a></h2>
+
+{% endblock %}

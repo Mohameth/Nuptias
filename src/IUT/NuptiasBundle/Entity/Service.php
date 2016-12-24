@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Service
  *
- * @ORM\Table(name="service")
- * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\ServiceRepository")
+ * @ORM\Entity
  */
 class Service
 {
@@ -19,14 +18,10 @@ class Service
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected  $id;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="IUT\NuptiasBundle\Entity\Prestataire")
-   * @ORM\JoinColumn(nullable=false)
-   */
-  private $prestataire;
 
+    //Prestataire supprimé car problème avec les relations ManyToOne relatif a doctrine : https://github.com/simplethings/EntityAudit/issues/87
 
 
     /**
@@ -34,28 +29,28 @@ class Service
      *
      * @ORM\Column(name="ville", type="string", length=35)
      */
-    private $ville;
+    protected $ville;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=64, unique=true)
      */
-    private $adresse;
+    protected $adresse;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prix", type="decimal", precision=10, scale=3)
      */
-    private $prix;
+    protected $prix;
 
 
     /**
@@ -164,27 +159,5 @@ class Service
         return $this->prix;
     }
 
-    /**
-     * Set prestataire
-     *
-     * @param \IUT\NuptiasBundle\Entity\Prestataire $prestataire
-     *
-     * @return Service
-     */
-    public function setPrestataire(\IUT\NuptiasBundle\Entity\Prestataire $prestataire)
-    {
-        $this->prestataire = $prestataire;
 
-        return $this;
-    }
-
-    /**
-     * Get prestataire
-     *
-     * @return \IUT\NuptiasBundle\Prestataire
-     */
-    public function getPrestataire()
-    {
-        return $this->prestataire;
-    }
 }

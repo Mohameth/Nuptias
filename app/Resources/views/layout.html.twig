@@ -35,8 +35,13 @@
               <ul class="nav navbar-nav navbar-right">
               <li><a href="#"></a></li>
               <li><a href="{{ path('iut_nuptias_accueil') }}">Accueil</a></li>
-              <li><a href="{{ path('iut_nuptias_dashBoard') }}">Espace personnel</a></li>
-              <li><a href="{{ path('iut_nuptias_packs') }}">Créez votre mariage</a></li>
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user|estPrestataire %}<!--
+              Les prestataires doivent pouvoir créer un service -->
+                <li><a href="{{ path('iut_nuptias_service') }}">Créer et gérer votre service</a></li>
+              {% else %}
+                <li><a href="{{ path('iut_nuptias_dashBoard') }}">Espace personnel</a></li>
+                <li><a href="{{ path('iut_nuptias_packs') }}">Créez votre mariage</a></li>
+              {% endif %}
               <li><a href="#">Nos prestataires</a></li>
               <li><a href="#">Contact</a></li>
 

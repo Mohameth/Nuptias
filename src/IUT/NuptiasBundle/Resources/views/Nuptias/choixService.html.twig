@@ -1,0 +1,13 @@
+
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Choix de service
+{% endblock %}
+
+{% block body %}
+    <h1>Premièrement, choisissez le type de service que vous désirez ajouter </h1>
+
+    {{ form(form) }}
+
+{% endblock %}

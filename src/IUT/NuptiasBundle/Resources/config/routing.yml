@@ -63,3 +63,18 @@ iut_nuptias_send_invite:
         id_mariage: 0
     requirements:
         id_mariage:   \d*
+
+iut_nuptias_choix_service:
+    path: /service/choix
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:choixService
+
+iut_nuptias_create_service:
+    path: /service/creation
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:createService
+
+iut_nuptias_service:
+    path: /service/gestion
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:service

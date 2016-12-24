@@ -21,9 +21,9 @@ class Client extends User
     protected $id;
 
     /**
-   * @ORM\ManyToMany(targetEntity="IUT\NuptiasBundle\Entity\Service", cascade={"persist"})
-   */
-   private $services;
+     * @ORM\ManyToMany(targetEntity="IUT\NuptiasBundle\Entity\Service", cascade={"persist"})
+     */
+     private $services;
 
 
 
