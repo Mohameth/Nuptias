@@ -201,7 +201,9 @@ class NuptiasController extends Controller
         $message->setBody(
         $this->renderView(
                   'IUTNuptiasBundle:Mail:Annonce.html.twig',
-                  array('name' => $i->getNom())
+                  array('name' => $i->getNom(),
+                        'id_mariage' => $mariage->getId(),
+                        'id_invite' => $i->getId())
                 ),
               'text/html'
           );
@@ -209,9 +211,51 @@ class NuptiasController extends Controller
       $this->get('mailer')->send($message);
       }
 
-      return $this->render('IUTNuptiasBundle:Nuptias:InviteSucces.html.twig');
+      return $this->render('IUTNuptiasBundle:Nuptias:SuccessMessage.html.twig',
+                            array('message' => 'Toutes vos invitations ont été envoyé avec succés')
+                          );
 
 
+    }
+
+    public function reponseAction($id_mariage,$id_invite,$id_reponse){
+      $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
+
+      //recuperation du mariage
+      if ($id_mariage != 0 && $id_invite != 0) {
+        $mariage = $repository->find($id_mariage);
+
+        if ($mariage != null) {
+
+          //Recherche du bon invite
+          foreach ($mariage->getInvites() as $inviteTemp) {
+            if ($inviteTemp->getId() == $id_invite) {
+              $invite = $inviteTemp;
+              break;
+            }
+          }
+
+          //Si on l'a trouvé on modifie sa reponse
+          if (isset($invite)) {
+            if ($id_reponse == 1) {
+              $invite->setReponse('Positive');
+            } else if ($id_reponse == 0) {
+              $invite->setReponse('Négative');
+            } else {
+              $invite->setReponse('En attente');
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($invite);
+            $em->flush();
+          }
+          return $this->render('IUTNuptiasBundle:Nuptias:SuccessMessage.html.twig',
+                                array('message' => 'Votre réponse a bien été enregistrée')
+                              );
+        }
+        else {
+          return new Response("ERREUR : Ce mariage n'existe pas/plus.");
+        }
+      }
     }
 
     public function deleteMariageAction($id) {

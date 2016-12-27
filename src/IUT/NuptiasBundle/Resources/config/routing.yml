@@ -78,3 +78,12 @@ iut_nuptias_service:
     path: /service/gestion
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:service
+
+iut_nuptias_invite_reponse:
+    path: /organisation/invites/reponce/{id_mariage}/{id_invite}/{id_reponse}
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:reponse
+    requirements:
+        id_mariage: \d*
+        id_invite:  \d*
+        id_reponse: \d*

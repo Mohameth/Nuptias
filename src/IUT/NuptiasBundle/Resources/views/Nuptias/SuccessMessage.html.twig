@@ -7,7 +7,9 @@
 {% block body %}
 
 <div class="row">
- <p> Toutes vos invitations ont été envoyé </p>
+ <h1> {{ message }}</h1>
+
+ <p> <a href="{{ path('iut_nuptias_accueil') }}" class="btn btn-lg btn-primary">Retour à l'accueil</a> </p>
 </div>
 
 {% endblock %}
