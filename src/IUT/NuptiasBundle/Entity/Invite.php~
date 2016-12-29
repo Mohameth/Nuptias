@@ -21,6 +21,11 @@ class Invite
      */
     private $id;
 
+
+    function __construct() {
+      $this->reponse = 'Non Envoyé';
+    }
+    
     /**
      * @var string
      *
@@ -41,6 +46,20 @@ class Invite
      * @ORM\Column(name="reponse", type="string", length=16)
      */
     private $reponse;
+
+    /**
+     * @var envoyerInvitation
+     *
+     * @ORM\Column(name="envoyerInvitation", type="boolean", options={"default":true})
+     */
+    private $envoyerInvitation;
+
+    /**
+     * @var invitationDejaEnvoye
+     *
+     * @ORM\Column(name="invitationDejaEnvoye", type="boolean", options={"default":false})
+     */
+    private $invitationDejaEnvoye;
 
     /**
      * Get id

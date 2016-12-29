@@ -8,11 +8,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class InvitesType extends AbstractType
+class InviteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,8 +21,8 @@ class InvitesType extends AbstractType
     {
       $builder
         ->add('nom',                TextType::class)
-        ->add('mail',               TextType::class)
-        ->add('Ajouter',            SubmitType::class);
+        ->add('mail',               EmailType::class)
+        ->add('envoyerInvitation',  CheckBoxType::class, array('required' => false, 'data' => true, 'label' => false));
       }
 
     /**

@@ -3,6 +3,7 @@
 namespace IUT\NuptiasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Mariage
@@ -160,6 +161,7 @@ class Mariage
     {
         $this->Invites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->nbInvites = 50;
+        $this->date = new \DateTime('tomorrow');
     }
 
     /**

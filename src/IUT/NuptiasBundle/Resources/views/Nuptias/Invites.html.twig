@@ -13,75 +13,141 @@
       que vous pourrez modifier si vous le souhaiter.
   </p>
 
-  <h2> Invités enregistrés: </h2>
+  <h2> Invités enregistrés : </h2>
 
   <div class="row">
     <style>
     div#list_de_trucs{
-      margin:10px auto;
+      margin:10px;
       width:100%;
       min-width:400px;
-      max-width:700px;
+      max-width:800px;
     }
     div#list_de_trucs table{
       margin:0px;
       width:100%;
     }
+    table thead {
+      background-color:lightgrey;
+    }
     </style>
 
     <div id="list_de_trucs" class="table-responsive">
-      <table>
-        <tr>
-          <th>Nom</th>
-          <th>Mail</th>
-          <th>Supprimer</th>
-        </tr>
-        {% for invite in invites  %}
-            <tr>
-              <td>{{ invite.nom }} </td>
-              <td>{{ invite.mail }} </td>
-              <td> <a href="{{ path('iut_nuptias_delete_invite', {'id_mariage': id_mariage, 'id_invite': invite.id}) }}" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
-            </tr>
-        {% endfor %}
-        <tr>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        {{ form_start(form) }}
-        <tr>
-          <td>{{ form_errors(form.nom) }} {{ form_widget(form.nom) }}</td>
-          <td>{{ form_errors(form.mail) }} {{ form_widget(form.mail) }}</td>
-          <td>{{ form_row(form.Ajouter) }}</td>
-        </tr>
-        {{ form_end(form) }}
+      {{ form_start(form) }}
+      <table class="table table-striped table-hover">
+        <thead style="background-color:lightgrey">
+          <tr>
+            <th>Nom</th>
+            <th>Mail</th>
+            <th>Envoyer une invitation ?</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        {#Le protoype sert à ajouter dynamiquement des lignes, au bon format (utilisé dans le script)#}
+
+        <tbody id="invites" data-prototype="
+          {% filter escape %}
+              {{ include('IUTNuptiasBundle:Nuptias:prototype.html.twig', { 'form': form.invites.vars.prototype }) }}
+          {% endfilter %}">
+          {% for invite in form.invites %}
+            {% if invite.vars.data.reponse == 'Non envoyé' %}
+              <tr>
+                <td>{{ form_errors(invite.nom) }}{{ form_widget(invite.nom) }}</td>
+                <td>{{ form_errors(invite.mail) }}{{ form_widget(invite.mail) }} </td>
+                <td>{{ form_row(invite.envoyerInvitation) }}</td>
+                <td> <a href="#" onclick="removeInvite(this)" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
+              </tr>
+            {% else %}{#On n'affiche pas les invités déjà invités néanmoins si ils n'apparaissent pas dans le form, symfony les supprimerait, donc on les cache avec display:none#}
+              <tr style="display: none">
+                <td>{{ form_errors(invite.nom) }}{{ form_widget(invite.nom) }}</td>
+                <td>{{ form_errors(invite.mail) }}{{ form_widget(invite.mail) }} </td>
+                <td>{{ form_row(invite.envoyerInvitation) }}</td>
+                <td> <a href="#" onclick="removeInvite(this)" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+
+
       </table>
     </div>
   </div>
+  <a href="#" id="addInvite" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-plus"></span> Ajouter un invité</a>
+  {{ form_widget(form.Enregistrer) }}
+
+  {{ form_widget(form._token) }}{{ form_end(form, {'render_rest': false}) }}
 
   <a href="{{ path('iut_nuptias_send_invite', {'id_mariage' : id_mariage} ) }}" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</a>
   <h2> Invitations déja envoyés : </h2>
-
-  <div class="row">
-    <div id="list_de_trucs" class="table-responsive">
-      <table>
-        <tr>
-          <th>Nom</th>
-          <th>Mail</th>
-          <th>Réponse</th>
-        </tr>
-        {% for invite in invites  %}
+  {% set nombreEnvoi = 0 %}
+  {% for invite in invites %}
+    {% if invite.reponse != 'Non envoyé' %} {% set nombreEnvoi = nombreEnvoi+1 %} {% endif %}
+  {% endfor %}
+  {% if nombreEnvoi == 0 %}
+    <p>Vous n'avez pas encore envoyé d'invitation.</p>
+  {% else %}
+    <div class="row">
+      <div id="list_de_trucs" class="table-responsive">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td>{{ invite.nom }} </td>
-              <td>{{ invite.mail }} </td>
-              <td>{{ invite.reponse }}</td>
+              <th>Nom</th>
+              <th>Mail</th>
+              <th>Réponse</th>
             </tr>
-        {% endfor %}
-      </table>
+          </thead>
+          {% for invite in invites  %}
+            {% if invite.reponse != 'Non envoyé' %}
+              <tr>
+                <td>{{ invite.nom }} </td>
+                <td>{{ invite.mail }} </td>
+                <td>{{ invite.reponse }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+      </div>
     </div>
-  </div>
-
+  {% endif %}
   <button type="button" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-cog"></span> Modifier l'annonce</button>
 
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript">
+
+    function removeInvite(objet) {
+      //L'objet est dans une cellule du tableau, la ligne à supprimer correspondante est donc
+      //le parent (cellule) du parent de l'objet (ligne).
+      $(objet).parent().parent().remove();
+    }
+
+    var index = '{{ form.invites|length }}';
+
+    jQuery(document).ready(function() {
+      jQuery('#addInvite').click(function(e) {
+        e.preventDefault();
+
+        //On récupère l'élément ayant pour id "invites" (tbody contenant la boucle)
+        var invites = jQuery('#invites');
+
+        //A partir de tbody on récupère le prototype
+        var newWidget = invites.attr('data-prototype');
+
+        //__name__ doit être remplacé par le numero d'invite ici index (cf. doc)
+        newWidget = newWidget.replace(/__name__/g, index);
+        index++;
+
+        //On ajoute à la page la nouvelle ligne crée dans des balises <tr>
+        var nouvelleLigne = jQuery('<tr></tr>').html(newWidget);
+        nouvelleLigne.appendTo(invites);
+      });
+
+      $('#addInvite').trigger("click");
+    });
+
+  </script>
 
 {% endblock %}

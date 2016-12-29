@@ -1,29 +1,70 @@
 {% extends "IUTNuptiasBundle::layout.html.twig" %}
 
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
 {% block title %}
   {{ parent() }} - Espace personnel
 {% endblock %}
 
 {% block body %}
-  <h3>Formulaire de création de mariage</h3>
+  <h1>Entrez les paramètres de votre mariage </h1>
+  <p>Ces informations nous serviront à vous proposer les services
+      les plus adaptés à votre besoin.</p>
 
-  <div class="well">
-    {{ form_start(form) }}
+  {{ form_start(form) }}
 
-      {% if pack == "DIY" %}
-        {{ form_widget(form.budgetSalle, { 'attr': {'class': 'hide'} }) }}
-        {{ form_widget(form.budgetTraiteur, { 'attr': {'class': 'hide'} }) }}
-        {{ form_widget(form.budgetPhotographe, { 'attr': {'class': 'hide'} }) }}
-        {{ form_widget(form.budgetDJ, { 'attr': {'class': 'hide'} }) }}
-      {% endif %}
+  <div class="mariage-form">
+    <div class="row" id="mariage">
+      <div class="mariage-categorie">
+        <p>Le mariage</p>
+      </div>
 
-      {% if pack == "classique" %}
+      <div class="mariage-contenu">
+        {{ form_row(form.date, {'label': 'Entrez la date du mariage : *'}) }}
+        {{ form_row(form.ville, {'label': 'Entrez la ville du mariage : *'}) }}
+        {{ form_row(form.nbInvites, {'label': 'Combien prévoyez-vous d\'invités : *'}) }}
+        {{ form_row(form.description, {'label': 'Entrez une rapide description : '}) }}
+      </div>
+    </div>
+
+
+    <div class="row" id="Budget">
+      <div class="mariage-categorie">
+        <p>Le budget</p>
+      </div>
+
+      <div class="mariage-contenu">
+        {{ form_row(form.budget, {'label': 'Quel est votre budget maximal (en euros) : *'}) }}
+        {% if pack != "DIY" %}
+          <p>Combien prévoyez-vous dépenser pour : </p><div class="mariage-budget">
+        {% endif %}
+
+        {% if pack == "DIY" %}
           {{ form_widget(form.budgetSalle, { 'attr': {'class': 'hide'} }) }}
           {{ form_widget(form.budgetTraiteur, { 'attr': {'class': 'hide'} }) }}
-      {% endif %}
+          {{ form_widget(form.budgetPhotographe, { 'attr': {'class': 'hide'} }) }}
+          {{ form_widget(form.budgetDJ, { 'attr': {'class': 'hide'} }) }}
+        {% elseif pack == "classique" %}
+          {{ form_row(form.budgetSalle, {'label': 'La salle : '}) }}
+          {{ form_row(form.budgetTraiteur, {'label': 'Le traiteur : '}) }}
+          {{ form_widget(form.budgetPhotographe, { 'attr': {'class': 'hide'} }) }}
+          {{ form_widget(form.budgetDJ, { 'attr': {'class': 'hide'} }) }}</div>
+        {% else %}
+          {{ form_row(form.budgetSalle, {'label': 'La salle : '}) }}
+          {{ form_row(form.budgetTraiteur, {'label': 'Le traiteur : '}) }}
+          {{ form_row(form.budgetPhotographe, {'label': 'Le photographe : '}) }}
+          {{ form_row(form.budgetDJ, {'label': 'Le DJ : '}) }}</div>
+        {% endif %}
+      </div>
+    </div>
 
-    {{ form_end(form) }}
+    <div id="mariage-enregistrer">
+      {{ form_row(form.Enregistrer, {'label' : 'Enregistrer et continuer'}) }}
+    </div>
+      {{ form_widget(form.invites, { 'attr': {'class': 'hide'} }) }}
   </div>
+
+  {{ form_end(form) }}
 
 {% endblock %}
 

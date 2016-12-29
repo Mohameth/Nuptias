@@ -4,3 +4,40 @@
 
   background-color: AliceBlue;
 }
+
+.mariage-categorie {
+  width: 10%;
+  min-width: 70px;
+  float: left;
+}
+
+.mariage-contenu {
+  width: 90%;
+  float: right;
+  border-left: 2px solid black;
+  padding: 10px;
+}
+
+.row {
+  margin: inherit;
+}
+
+.mariage-form > .row {
+  border-left: 2px solid black;
+}
+
+#mariage {
+  border-bottom: 2px solid black;
+}
+
+.mariage-contenu > p, .mariage-categorie > p {
+  font-weight: bold;
+}
+
+#mariage-enregistrer {
+  float: right;
+}
+/*
+.mariage-budget {
+    border-left: 1px solid black;
+}*/

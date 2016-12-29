@@ -23,7 +23,7 @@ class Invite
 
 
     function __construct() {
-      $this->reponse = 'Non Envoyé';
+      $this->reponse = 'Non envoyé';
     }
     
     /**
@@ -46,6 +46,13 @@ class Invite
      * @ORM\Column(name="reponse", type="string", length=16)
      */
     private $reponse;
+
+    /**
+     * @var envoyerInvitation
+     *
+     * @ORM\Column(name="envoyerInvitation", type="boolean")
+     */
+    private $envoyerInvitation;
 
     /**
      * Get id
@@ -127,5 +134,29 @@ class Invite
     public function getReponse()
     {
         return $this->reponse;
+    }
+
+    /**
+     * Set envoyerInvitation
+     *
+     * @param boolean $envoyerInvitation
+     *
+     * @return Invite
+     */
+    public function setEnvoyerInvitation($envoyerInvitation)
+    {
+        $this->envoyerInvitation = $envoyerInvitation;
+
+        return $this;
+    }
+
+    /**
+     * Get envoyerInvitation
+     *
+     * @return boolean
+     */
+    public function getEnvoyerInvitation()
+    {
+        return $this->envoyerInvitation;
     }
 }

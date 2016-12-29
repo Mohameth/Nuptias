@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use IUT\NuptiasBundle\Entity\Mariage;
 use IUT\NuptiasBundle\Form\MariageType;
 use IUT\NuptiasBundle\Entity\Invite;
-use IUT\NuptiasBundle\Form\InvitesType;
+use IUT\NuptiasBundle\Form\InviteType;
 use IUT\NuptiasBundle\Entity\Salle;
 use IUT\NuptiasBundle\Form\SalleType;
 use IUT\NuptiasBundle\Entity\Traiteur;
@@ -89,37 +89,29 @@ class NuptiasController extends Controller
       if ($id_mariage != 0) {
         $mariage = $repository->find($id_mariage);
       }
-      if ($mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
+      if (!isset($mariage) || $mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
       if ($mariage->getClient()->getId() != $user->getId()) {
         return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
       }
 
-      //Création de l'invite et de la réponse par défaut
-      $invite = new Invite();
-      $invite->setReponse("En attente");
 
-      //Création du formulaire pour cet invite
-      $form = $this->get('form.factory')->create(InvitesType::class, $invite);
+      //Création du formulaire
+      $form = $this->get('form.factory')->create(MariageType::class, $mariage);
 
-      //L'utilisateur a cliqué sur "Ajouter", le formulaire doit être géré.
+      //L'utilisateur a cliqué sur "Enregistrer", le formulaire doit être géré.
       if($request->isMethod('POST')) {
-        // Le formulaire hydrate la variable $mariage (et $invite aussi du coup) avec les bonnes valeurs
+        // Le formulaire hydrate le mariage et les invites
         $form->handleRequest($request);
 
-        foreach ($mariage->getInvites() as $inviteTemp) {
-          if ($inviteTemp->getMail() == $invite->getMail()) {
-            return new Response("ERREUR : Un invité avec cette adresse mail a déjà été enregistré.");
-          }
-        }
+        //TODO: Créer un validateur pour vérifier que deux invités n'aient pas le même mail
 
         if ($form->isValid()) {
           // Enregistrement
-          $mariage->addInvite($invite);
           $em = $this->getDoctrine()->getManager();
           $em->persist($mariage);
           $em->flush();
 
-          $request->getSession()->getFlashBag()->add('notice', 'Invite bien enregistrée.');
+          $request->getSession()->getFlashBag()->add('notice', 'Mariage bien enregistrée.');
         }
       }
 
@@ -129,45 +121,6 @@ class NuptiasController extends Controller
                            'invites' => $mariage->getInvites(),
                            'nbInvites' => $mariage->getNbInvites())
         );
-    }
-
-    public function deleteInviteAction(Request $request, $id_mariage, $id_invite) {
-      //Recupération de l'utilisateur
-      $user = $this->container->get('security.token_storage')->getToken()->getUser();
-      $repository = $this->getDoctrine()->getManager()->getRepository('IUTNuptiasBundle:Mariage');
-
-      //récuperation du mariage si id présent
-      if ($id_mariage != 0 && $id_invite != 0) {
-        $mariage = $repository->find($id_mariage);
-
-        if ($mariage != null) {
-          if ($mariage->getClient()->getId() != $user->getId()) {
-            return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
-          }
-
-          //Recherche du bon invite
-          foreach ($mariage->getInvites() as $inviteTemp) {
-            if ($inviteTemp->getId() == $id_invite) {
-              $invite = $inviteTemp;
-              break;
-            }
-          }
-
-          //Si on l'a trouvé on le supprime
-          if (isset($invite)) {
-            $mariage->removeInvite($invite);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($mariage);
-            $em->flush();
-          }
-        }
-        else {
-          return new Response("ERREUR : Ce mariage n'existe pas/plus.");
-        }
-      }
-
-      return $this->invitesAction($request, $id_mariage);
     }
 
 
@@ -180,7 +133,7 @@ class NuptiasController extends Controller
       if ($id_mariage != 0) {
         $mariage = $repository->find($id_mariage);
       }
-      if (! isset($mariage) || $mariage == null) return new Response("ERREUR : Ce mariage n'existe pas");
+      if (! isset($mariage) || $mariage == null || $id_mariage == 0) return new Response("ERREUR : Ce mariage n'existe pas");
       if ($mariage->getClient()->getId() != $user->getId()) {
         return new Response("ERREUR : Vous n'avez pas acces à ce mariage");
       }
@@ -197,18 +150,25 @@ class NuptiasController extends Controller
 
       //envoie à tous les invités enregistrer
       foreach ($invites as $i ) {
-        $message->setTo($i->getMail());
-        $message->setBody(
-        $this->renderView(
-                  'IUTNuptiasBundle:Mail:Annonce.html.twig',
-                  array('name' => $i->getNom(),
-                        'id_mariage' => $mariage->getId(),
-                        'id_invite' => $i->getId())
-                ),
-              'text/html'
+        if ($i->getEnvoyerInvitation() == true && $i->getReponse() == "Non envoyé") {
+          $message->setTo($i->getMail());
+          $message->setBody(
+            $this->renderView(
+              'IUTNuptiasBundle:Mail:Annonce.html.twig',
+              array('name' => $i->getNom(),
+                'id_mariage' => $mariage->getId(),
+                'id_invite' => $i->getId())
+            ),
+            'text/html'
           );
+        }
 
-      $this->get('mailer')->send($message);
+        $this->get('mailer')->send($message);
+        //On met à jour l'invité, l'invitation a bien été envoyé et on enregistre
+        $i->setReponse('En attente');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($mariage);
+        $em->flush();
       }
 
       return $this->render('IUTNuptiasBundle:Nuptias:SuccessMessage.html.twig',
@@ -259,6 +219,7 @@ class NuptiasController extends Controller
     }
 
     public function deleteMariageAction($id) {
+      /**TODO: Supprimer dans la DB toutes les dépendances (invites, services liés ...)*/
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
 
@@ -345,7 +306,7 @@ class NuptiasController extends Controller
         return new Response("ERREUR : Seul un prestataire peut gérer un service");
       }
 
-      $typeService = array('Traiteur', 'Salle', 'Traiteur', 'DJ', 'Deco',);
+      $typeService = array('Salle', 'Traiteur', 'DJ', 'Deco');//Deco ou photographe ?
       $listeService = array();
       $em = $this->getDoctrine()->getManager();
 
