@@ -74,10 +74,10 @@
   </div>
   <a href="#" id="addInvite" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-plus"></span> Ajouter un invité</a>
   {{ form_widget(form.Enregistrer) }}
+  {{ form_widget(form.EnregistrerPuisEnvoyer, {'attr': {'class': 'btn btn-primary btn-info'}}) }}
 
   {{ form_widget(form._token) }}{{ form_end(form, {'render_rest': false}) }}
-
-  <a href="{{ path('iut_nuptias_send_invite', {'id_mariage' : id_mariage} ) }}" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-arrow-right"></span> Envoyer toutes les invitations</a>
+  
   <h2> Invitations déja envoyés : </h2>
   {% set nombreEnvoi = 0 %}
   {% for invite in invites %}
@@ -127,6 +127,9 @@
     var index = '{{ form.invites|length }}';
 
     jQuery(document).ready(function() {
+      //Sert juste à ajouter le span sans rédifinir le block label de twig
+      jQuery('#iut_nuptiasbundle_mariage_EnregistrerPuisEnvoyer').prepend('<span class="glyphicon glyphicon-arrow-right"></span> ');
+        
       jQuery('#addInvite').click(function(e) {
         e.preventDefault();
 
@@ -144,8 +147,15 @@
         var nouvelleLigne = jQuery('<tr></tr>').html(newWidget);
         nouvelleLigne.appendTo(invites);
       });
-
-      $('#addInvite').trigger("click");
+      
+      //Compte du nombre d'invitatons
+      {% set nombreEnvoi = 0 %}
+      {% for invite in invites %}
+        {% if invite.reponse != 'Non envoyé' %} {% set nombreEnvoi = nombreEnvoi+1 %} {% endif %}
+      {% endfor %}
+      
+      //Si toutes les invitations ont été envoyés, clic sur ajouter un invité enclenché par défaut.
+      if (index-{{ nombreEnvoi }} == 0) $('#addInvite').trigger("click");
     });
 
   </script>

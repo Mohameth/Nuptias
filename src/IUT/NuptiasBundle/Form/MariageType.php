@@ -37,7 +37,8 @@ class MariageType extends AbstractType
           'allow_delete'  => true,
           'by_reference'  => false
         ))
-        ->add('Enregistrer',      SubmitType::class);
+        ->add('Enregistrer',      SubmitType::class)
+        ->add('EnregistrerPuisEnvoyer', SubmitType::class, array('label' => 'Envoyer toutes les invitations'));
       }
 
     /**

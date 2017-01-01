@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Service
  *
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
 class Service
 {
@@ -41,7 +43,7 @@ class Service
     /**
      * @var string
      *
-     * @ORM\Column(name="adresse", type="string", length=64, unique=true)
+     * @ORM\Column(name="adresse", type="string", length=64)
      */
     protected $adresse;
 

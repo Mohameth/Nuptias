@@ -7,14 +7,34 @@
 
 {% block body %}
 
-    {% if listeService|length == 0 %}
-        <h1>Vous ne possedez encore aucun service -- Affichage des services ne fonctionnent pas encore.</h1>
-    {% else %}
-        <h1>Voici vos service(s) :  -- Affichage des services ne fonctionnent pas encore.</h1>
-    {% endif %}
+  {% if listeService|length == 0 %}
+    <h1>Vous ne possedez encore aucun service</h1>
+  {% else %}
+    <h1>Voici vos service(s) : </h1>
+    
+    {% for listeServiceParType in listeService %}
+      {% for service in listeServiceParType %}
+        
+        {% if service is not empty %}
+          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+            <h4> {{ class(service) }} à {{ service.ville }}</h4>
+            <p>Description : {{ service.description }}</p>
+            <p>Adresse : {{ service.adresse }}</p>
+            <p>Prix : {{ service.prix }}</p>
+            {% if service.capacite is defined %}
+              <p>Capacite : {{ service.capacite }}</p>
+            {% endif %}
+            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a>
+          </div>
+        {% endif %}
+        
+      {% endfor %}
+    {% endfor %}
+    
+  {% endif %}
+{{ dump(listeService) }}
 
-    {{ dump(listeService) }}
 
-    <h2><a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_choix_service') }} ">Créer un nouveau service</a></h2>
+  <h2><a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_choix_service') }} ">Créer un nouveau service</a></h2>
 
 {% endblock %}

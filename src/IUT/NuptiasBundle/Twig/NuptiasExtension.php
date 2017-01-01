@@ -11,14 +11,27 @@ class NuptiasExtension extends \Twig_Extension
     );
   }
 
+  public function getFunctions()
+  {
+    return array(
+      'class' => new \Twig_SimpleFunction('class', array($this, 'getClass'))
+    );
+  }
+
+  /**
+   * Retourne la classe de l'objet passé en paramètre
+   */
+  public function getClass($object)
+  {
+    return (new \ReflectionClass($object))->getShortName();
+  }
+
   /**
    * Retourne true si l'utilisateur est prestataire
    */
   public function estPrestataireFilter($user)
   {
-    if (get_class($user) == 'IUT\NuptiasBundle\Entity\Prestataire') return true;
-
-    return false;
+    return (get_class($user) == 'IUT\NuptiasBundle\Entity\Prestataire');
   }
 
   public function getName()

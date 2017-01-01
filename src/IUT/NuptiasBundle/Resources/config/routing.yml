@@ -74,6 +74,11 @@ iut_nuptias_create_service:
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:createService
 
+iut_nuptias_edit_service:
+    path: /service/modification
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:editService
+
 iut_nuptias_service:
     path: /service/gestion
     defaults:

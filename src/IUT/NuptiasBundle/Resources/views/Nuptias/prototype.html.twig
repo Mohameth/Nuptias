@@ -1,5 +1,5 @@
 
 <td>{{ form_errors(form.nom) }} {{ form_widget(form.nom) }}</td>
 <td>{{ form_errors(form.mail) }} {{ form_widget(form.mail) }} </td>
-<td>{{ form_row(form.envoyerInvitation) }}</td>
+<td>{{ form_row(form.envoyerInvitation, { 'attr': {'checked': 'checked'} }) }}</td>
 <td> <a href="#" onclick="removeInvite(this)" class="btn btn-primary btn-danger">Supprimer <span class="glyphicon glyphicon-trash"></span></a> </td>

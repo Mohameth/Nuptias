@@ -22,7 +22,7 @@ class InviteType extends AbstractType
       $builder
         ->add('nom',                TextType::class)
         ->add('mail',               EmailType::class)
-        ->add('envoyerInvitation',  CheckBoxType::class, array('required' => false, 'data' => true, 'label' => false));
+        ->add('envoyerInvitation',  CheckBoxType::class, array('required' => false, 'label' => false));
       }
 
     /**

@@ -112,6 +112,10 @@ class NuptiasController extends Controller
           $em->flush();
 
           $request->getSession()->getFlashBag()->add('notice', 'Mariage bien enregistrée.');
+
+          if ($form->get('EnregistrerPuisEnvoyer')->isClicked()) {
+            return $this->redirectToRoute('iut_nuptias_send_invite', array('id_mariage' => $id_mariage));
+          }
         }
       }
 
@@ -161,14 +165,13 @@ class NuptiasController extends Controller
             ),
             'text/html'
           );
+          $this->get('mailer')->send($message);
+          //On met à jour l'invité, l'invitation a bien été envoyé et on enregistre
+          $i->setReponse('En attente');
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($mariage);
+          $em->flush();
         }
-
-        $this->get('mailer')->send($message);
-        //On met à jour l'invité, l'invitation a bien été envoyé et on enregistre
-        $i->setReponse('En attente');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($mariage);
-        $em->flush();
       }
 
       return $this->render('IUTNuptiasBundle:Nuptias:SuccessMessage.html.twig',
@@ -307,17 +310,15 @@ class NuptiasController extends Controller
       }
 
       $typeService = array('Salle', 'Traiteur', 'DJ', 'Deco');//Deco ou photographe ?
-      $listeService = array();
       $em = $this->getDoctrine()->getManager();
 
       foreach ($typeService as $type) {
-        //Le repository ne se met pas à jour --
         $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
-        $listeService[] = $repository->findBy(
+        $listeService[$type] = $repository->findBy(
           array('prestataire' => $user->getId())
         );
 
-        //var_dump($listeService);
+        $em->clear();
       }
 
       return $this->render('IUTNuptiasBundle:Nuptias:service.html.twig', array(
@@ -361,7 +362,7 @@ class NuptiasController extends Controller
 
       $type = $request->query->get('type');
       if (!isset($type) || $type == null) {
-        return new Response("ERREUR : Le type de service n'a pas été spécifiée");
+        return new Response("ERREUR : Le type de service n'a pas été spécifié");
       }
 
       //Création dynamique d'une instance de Service puis d'un formulaire selon le type spécifié
@@ -390,6 +391,44 @@ class NuptiasController extends Controller
       return $this->render('IUTNuptiasBundle:Nuptias:creer_service.html.twig', array(
         'type' => $type,
         'form' => $formInstanceService->createView()
+      ));
+    }
+
+    public function editServiceAction(Request $request) {
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+      $id_service = $request->query->get('id_service');
+      $type = $request->query->get('type');
+      if (!isset($id_service) || $id_service == null) {
+        return new Response("ERREUR : Le service n'a pas été spécifié");
+      }
+      if (!isset($type) || $type == null) {
+        return new Response("ERREUR : Le type de service n'a pas été spécifié");
+      }
+
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+      $service = $repository->find($id_service);
+
+      if ($service->getPrestataire()->getId() != $user->getId()) return new Response("ERREUR : Vous n'avez pas les droits suffisants.");
+
+      $form = $this->get('form.factory')->create('IUT\NuptiasBundle\Form\\'.$type.'Type', $service);
+      if($request->isMethod('POST')) {
+        $form->handleRequest($request);
+        if ($form->isValid()) {echo 'test';
+          // Enregistrement
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($service);
+          $em->flush();
+
+          return $this->redirectToRoute('iut_nuptias_service');
+        }
+      }
+
+      return $this->render('IUTNuptiasBundle:Nuptias:editService.html.twig', array(
+          'id_service' => $id_service,
+          'type' => $type,
+          'form' => $form->createView()
       ));
     }
 }
