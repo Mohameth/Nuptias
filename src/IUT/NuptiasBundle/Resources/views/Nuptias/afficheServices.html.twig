@@ -1,0 +1,24 @@
+
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Choix de votre prestataire - {{ type }}
+{% endblock %}
+
+{% block body %}
+  <h1>Choisissez un prestataire pour votre mariage</h1>
+
+  {% for service in listeServices %}
+    <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+      <h4> {{ class(service) }} à {{ service.ville }}</h4>
+      <p>Description : {{ service.description }}</p>
+      <p>Adresse : {{ service.adresse }}</p>
+      <p>Prix : {{ service.prix }}</p>
+      {% if service.capacite is defined %}
+        <p>Capacite : {{ service.capacite }}</p>
+      {% endif %}
+      {#  <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a> #}
+    </div>
+  {% endfor %}
+
+{% endblock %}

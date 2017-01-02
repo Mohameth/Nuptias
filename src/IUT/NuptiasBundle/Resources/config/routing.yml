@@ -92,3 +92,8 @@ iut_nuptias_invite_reponse:
         id_mariage: \d*
         id_invite:  \d*
         id_reponse: \d*
+
+iut_nuptias_affiche_services:
+    path: /service/affichage
+    defaults:
+        _controller: IUTNuptiasBundle:afficheServices

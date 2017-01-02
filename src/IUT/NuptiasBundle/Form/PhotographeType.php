@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class DecoType extends AbstractType
+class PhotographeType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class DecoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUT\NuptiasBundle\Entity\Deco'
+            'data_class' => 'IUT\NuptiasBundle\Entity\Photographe'
         ));
     }
 
@@ -40,7 +40,7 @@ class DecoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'iut_nuptiasbundle_deco';
+        return 'iut_nuptiasbundle_photographe';
     }
 
 

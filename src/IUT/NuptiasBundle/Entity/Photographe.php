@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Deco
  *
- * @ORM\Table(name="deco")
- * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\DecoRepository")
+ * @ORM\Table(name="photographe")
+ * @ORM\Entity(repositoryClass="IUT\NuptiasBundle\Repository\PhotographeRepository")
  */
-class Deco Extends Service
+class Photographe Extends Service
 {
   /**
    * @ORM\ManyToOne(targetEntity="IUT\NuptiasBundle\Entity\Prestataire")

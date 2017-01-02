@@ -23,8 +23,8 @@ use IUT\NuptiasBundle\Entity\Traiteur;
 use IUT\NuptiasBundle\Form\TraiteurType;
 use IUT\NuptiasBundle\Entity\DJ;
 use IUT\NuptiasBundle\Form\DJType;
-use IUT\NuptiasBundle\Entity\Deco;
-use IUT\NuptiasBundle\Form\DecoType;
+use IUT\NuptiasBundle\Entity\Photographe;
+use IUT\NuptiasBundle\Form\PhotographeType;
 
 class NuptiasController extends Controller
 {
@@ -309,7 +309,7 @@ class NuptiasController extends Controller
         return new Response("ERREUR : Seul un prestataire peut gérer un service");
       }
 
-      $typeService = array('Salle', 'Traiteur', 'DJ', 'Deco');//Deco ou photographe ?
+      $typeService = array('Salle', 'Traiteur', 'DJ', 'Photographe');
       $em = $this->getDoctrine()->getManager();
 
       foreach ($typeService as $type) {
@@ -333,7 +333,7 @@ class NuptiasController extends Controller
             'Salle' => 'Salle',
             'Traiteur' => 'Traiteur',
             'DJ' => 'DJ',
-            'Decoration' => 'Deco',),
+            'Photographe' => 'Photographe',),
           'expanded' => true))
         ->add('Continuer', SubmitType::class)
         ->getForm();
@@ -415,7 +415,7 @@ class NuptiasController extends Controller
       $form = $this->get('form.factory')->create('IUT\NuptiasBundle\Form\\'.$type.'Type', $service);
       if($request->isMethod('POST')) {
         $form->handleRequest($request);
-        if ($form->isValid()) {echo 'test';
+        if ($form->isValid()) {
           // Enregistrement
           $em = $this->getDoctrine()->getManager();
           $em->persist($service);
@@ -429,6 +429,22 @@ class NuptiasController extends Controller
           'id_service' => $id_service,
           'type' => $type,
           'form' => $form->createView()
+      ));
+    }
+
+    public function afficheServicesAction(Request $request) {
+      $type = $request->query->get('type');
+      if (!isset($type) || $type == null) {
+        return new Response("ERREUR : Le type de service n'a pas été spécifié");
+      }
+
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+      //$listeServices = $repository->findAll();
+
+      return $this->render('IUTNuptiasBundle:Nuptias:afficheServices.html.twig', array(
+         // 'listeServices' => $listeServices,
+          'type' => $type
       ));
     }
 }
