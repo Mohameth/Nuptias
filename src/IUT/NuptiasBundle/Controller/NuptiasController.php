@@ -440,10 +440,10 @@ class NuptiasController extends Controller
 
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
-      //$listeServices = $repository->findAll();
+      $listeServices = $repository->findAll();
 
       return $this->render('IUTNuptiasBundle:Nuptias:afficheServices.html.twig', array(
-         // 'listeServices' => $listeServices,
+          'listeServices' => $listeServices,
           'type' => $type
       ));
     }

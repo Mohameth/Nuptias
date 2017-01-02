@@ -96,4 +96,4 @@ iut_nuptias_invite_reponse:
 iut_nuptias_affiche_services:
     path: /service/affichage
     defaults:
-        _controller: IUTNuptiasBundle:afficheServices
+        _controller: IUTNuptiasBundle:Nuptias:afficheServices
