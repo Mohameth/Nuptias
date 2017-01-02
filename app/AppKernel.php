@@ -24,6 +24,12 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
+        if (in_array($this->getEnvironment(), array('dev', 'prod'))) {
+          $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+          $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+          $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+          $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        }
         return $bundles;
     }
     public function getRootDir()
