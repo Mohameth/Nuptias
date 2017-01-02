@@ -75,8 +75,8 @@
   <a href="#" id="addInvite" class="btn btn-primary btn-info"><span class="glyphicon glyphicon-plus"></span> Ajouter un invité</a>
   {{ form_widget(form.Enregistrer) }}
   {{ form_widget(form.EnregistrerPuisEnvoyer, {'attr': {'class': 'btn btn-primary btn-info'}}) }}
-
-  {{ form_widget(form._token) }}{{ form_end(form, {'render_rest': false}) }}
+  <div style="display: none">{{ form_rest(form) }}</div>{#On cache les autres éléments du formulaire de mariage pour ne s'occuper que des invités.#}
+  {{ form_widget(form._token) }}{{ form_end(form) }}
   
   <h2> Invitations déja envoyés : </h2>
   {% set nombreEnvoi = 0 %}
