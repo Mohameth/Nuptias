@@ -37,7 +37,7 @@
 #mariage-enregistrer {
   float: right;
 }
-/*
-.mariage-budget {
-    border-left: 1px solid black;
-}*/
+
+.row-service {
+  display: flex;
+}

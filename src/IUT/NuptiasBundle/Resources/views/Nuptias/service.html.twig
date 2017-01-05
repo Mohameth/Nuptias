@@ -7,32 +7,43 @@
 
 {% block body %}
 
-  {% if listeService|length == 0 %}
+  {% if listeService.Salle|length == 0 and listeService.Traiteur|length == 0
+        and listeService.DJ|length == 0 and listeService.Photographe|length == 0%}
     <h1>Vous ne possedez encore aucun service</h1>
   {% else %}
     <h1>Voici vos service(s) : </h1>
-    
+    {% set compteurColonne = 0 %}
+    {% set nouvelleLigne = 0 %}
+    {% set baliseFerme = 1 %}
+
     {% for listeServiceParType in listeService %}
       {% for service in listeServiceParType %}
         
         {% if service is not empty %}
-          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
-            <h4> {{ class(service) }} à {{ service.ville }}</h4>
-            <p>Description : {{ service.description }}</p>
-            <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }}</p>
-            {% if service.capacite is defined %}
-              <p>Capacite : {{ service.capacite }}</p>
-            {% endif %}
-            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a>
-          </div>
+          {% if compteurColonne == 0 or compteurColonne is divisibleby(4) %}<div class="row-service">
+            {% set nouvelleLigne = compteurColonne %}{% set baliseFerme = 0 %}
+          {% endif %}
+            <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+              <h4> {{ class(service) }} à {{ service.ville }}</h4>
+              <p>Description : {{ service.description }}</p>
+              <p>Adresse : {{ service.adresse }}</p>
+              <p>Prix : {{ service.prix }}</p>
+              {% if service.capacite is defined %}
+                <p>Capacite : {{ service.capacite }}</p>
+              {% endif %}
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a>
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_delete_service', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+            </div>
+          {% if compteurColonne == nouvelleLigne+3 %}{% set baliseFerme = 1 %}</div>{% endif %}
+          {% set compteurColonne = compteurColonne+1 %}
         {% endif %}
         
       {% endfor %}
     {% endfor %}
-    
+
+    {% if baliseFerme == 0 %} </div>{% endif %}
   {% endif %}
-{{ dump(listeService) }}
+
 
 
   <h2><a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_choix_service') }} ">Créer un nouveau service</a></h2>

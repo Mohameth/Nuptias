@@ -312,13 +312,14 @@ class NuptiasController extends Controller
       $typeService = array('Salle', 'Traiteur', 'DJ', 'Photographe');
       $em = $this->getDoctrine()->getManager();
 
+      //Pour chaque type de service, on recherche les services crés par l'utilisateur connecté
       foreach ($typeService as $type) {
         $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
         $listeService[$type] = $repository->findBy(
           array('prestataire' => $user->getId())
         );
 
-        $em->clear();
+        $em->clear();//Sans ca, on ne peut récupérer différent repository
       }
 
       return $this->render('IUTNuptiasBundle:Nuptias:service.html.twig', array(
@@ -399,7 +400,7 @@ class NuptiasController extends Controller
 
       $id_service = $request->query->get('id_service');
       $type = $request->query->get('type');
-      if (!isset($id_service) || $id_service == null) {
+      if (!isset($id_service) || $id_service == null) {//La spécification d'un service est obligatoire
         return new Response("ERREUR : Le service n'a pas été spécifié");
       }
       if (!isset($type) || $type == null) {
@@ -412,7 +413,9 @@ class NuptiasController extends Controller
 
       if ($service->getPrestataire()->getId() != $user->getId()) return new Response("ERREUR : Vous n'avez pas les droits suffisants.");
 
+      //Création d'un formulaire de bon type avec la variable service
       $form = $this->get('form.factory')->create('IUT\NuptiasBundle\Form\\'.$type.'Type', $service);
+      //Clic sur enregistrer
       if($request->isMethod('POST')) {
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -432,6 +435,29 @@ class NuptiasController extends Controller
       ));
     }
 
+    public function deleteServiceAction(Request $request) {
+      $id_service = $request->query->get('id_service');
+      $type = $request->query->get('type');
+      if (!isset($id_service) || $id_service == null || $id_service == 0) {//La spécification d'un service est obligatoire
+        return new Response("ERREUR : Le service n'a pas été spécifié");
+      }
+      if (!isset($type) || $type == null) {
+        return new Response("ERREUR : Le type de service n'a pas été spécifié");
+      }
+
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+      $service = $repository->find($id_service);
+
+      if ($service != null) {
+        $em->remove($service);
+        $em->flush();
+        return $this->redirectToRoute('iut_nuptias_service');
+      }
+
+    }
+
+    /**Utilisé par les clients, permet l'affichage de tous les services en DB*/
     public function afficheServicesAction(Request $request) {
       $type = $request->query->get('type');
       if (!isset($type) || $type == null) {
@@ -446,5 +472,30 @@ class NuptiasController extends Controller
           'listeServices' => $listeServices,
           'type' => $type
       ));
+    }
+
+    public function addService(Request $request) {
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+      if ($user == null) return new Response("ERREUR : Vous devez vous connecter pour créer un service.");
+      //Il faut que l'utilisateur soit un client
+      if (get_class($user) != 'IUT\NuptiasBundle\Entity\Client') {
+        return new Response("ERREUR : Seul un prestataire peut ajouter un service");
+      }
+
+      $id_service = $request->query->get('id_service');
+      $type = $request->query->get('type');
+      if (!isset($id_service) || $id_service == null || $id_service == 0) {//La spécification d'un service est obligatoire
+        return new Response("ERREUR : Le service n'a pas été spécifié");
+      }
+      if (!isset($type) || $type == null) {
+        return new Response("ERREUR : Le type de service n'a pas été spécifié");
+      }
+
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+      $service = $repository->find($id_service);
+
+      $user->addService($service);
     }
 }
