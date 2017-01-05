@@ -1,0 +1,53 @@
+{% extends "IUTNuptiasBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Contact
+{% endblock %}
+
+{% block body %}
+  <h1>Contact</h1>
+      <h2>Contacter un administrateur</h2>
+
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#J">Sanchez Jérémy</a></li>
+        <li><a data-toggle="tab" href="#S">Troussier Simon</a></li>
+        <li><a data-toggle="tab" href="#M">Fall Mohameth</a></li>
+        <li><a data-toggle="tab" href="#L">Vivier Louis</a></li>
+        <li><a data-toggle="tab" href="#E">Milleret Esteban</a></li>
+        <li><a data-toggle="tab" href="#N">Guillaud Nathan</a></li>
+      </ul>
+
+
+  <div class="tab-content">
+    <div id="J" class="tab-pane fade in active">
+        <h3>Sanchez Jérémy</h3>
+        <h4>Chef De projet </h4>
+        <p> mail : jeremy.sanchez@etu.univ-grenoble-alpes.fr</p>
+    </div>
+
+    <div id="S" class="tab-pane fade">
+        <h3>Troussier Simon</h3>
+        <p> mail : simon.troussier@etu.univ-grenoble-alpes.fr</p>
+    </div>
+
+    <div id="M" class="tab-pane fade">
+        <h3>Fall Mohameth</h3>
+        <p> mail : mohameth.fall@etu.univ-grenoble-alpes.fr</p>
+    </div>
+
+    <div id="L" class="tab-pane fade">
+        <h3>Vivier Louis</h3>
+        <p> mail : louis.vivier@etu.univ-grenoble-alpes.fr</p>
+    </div>
+
+    <div id="E" class="tab-pane fade">
+        <h3>Milleret Esteban</h3>
+        <p> mail : esteban.milleret@etu.univ-grenoble-alpes.fr</p>
+    </div>
+
+    <div id="N" class="tab-pane fade">
+        <h3>Guillaud Nathan</h3>
+        <p> mail : nathan.guillaud@etu.univ-grenoble-alpes.fr</p>
+    </div>
+  </div>
+{% endblock %}

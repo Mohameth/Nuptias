@@ -11,6 +11,15 @@
   float: left;
 }
 
+.row-pack {
+  display: flex;
+}
+
+.col-md-4 > a {
+  position: absolute;
+  bottom: -50px;
+}
+
 .mariage-contenu {
   width: 90%;
   float: right;
@@ -38,6 +47,7 @@
   float: right;
 }
 
-.row-service {
-  display: flex;
-}
+/*
+.mariage-budget {
+    border-left: 1px solid black;
+}*/

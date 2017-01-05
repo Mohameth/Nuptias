@@ -1,9 +1,15 @@
 
 {% extends "::layout.html.twig" %}
 
+{% block stylesheets %} <!-- feuille de styles pour les pages autre que index.html.twig -->
+  {{ parent() }}
+{% endblock %}
+
 {% block title %}
   {{ parent() }}
 {% endblock %}
 
 {% block body %}
+
+<!-- rajoute les bandes pour les pages autre que index.html.twig -->
 {% endblock %}

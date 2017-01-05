@@ -103,6 +103,11 @@ iut_nuptias_affiche_services:
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:afficheServices
 
+iut_nuptias_contact:
+    path: /contact
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:contact
+
 iut_nuptias_add_service_client:
     path: /service/ajouter
     defaults:

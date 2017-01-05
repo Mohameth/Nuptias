@@ -43,7 +43,7 @@
                 <li><a href="{{ path('iut_nuptias_packs') }}">Créez votre mariage</a></li>
               {% endif %}
               <li><a href="#">Nos prestataires</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="{{ path('iut_nuptias_contact') }}">Contact</a></li>
 
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li class="dropdown">
@@ -80,7 +80,7 @@
       <footer class="footer navbar-bottom">
         <hr>
           <div class="container text-center">
-            <p>Mentions légales © {{ 'now'|date('Y') }}</p>
+            <p>Projet Réalisé à l'IUT 2 de Grenoble - Mentions légales © {{ 'now'|date('Y') }}</p>
           </div>
       </footer>
 
