@@ -447,4 +447,8 @@ class NuptiasController extends Controller
           'type' => $type
       ));
     }
+
+    public function contactAction() {
+      return $this->render('IUTNuptiasBundle:Nuptias:contact.html.twig');
+    }
 }
