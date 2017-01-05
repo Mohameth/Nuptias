@@ -536,10 +536,19 @@ class NuptiasController extends Controller
       $user->removeService($service);
 
       // Enregistrement
-      $em = $this->getDoctrine()->getManager();
       $em->persist($user);
       $em->flush();
 
       return $this->redirectToRoute('iut_nuptias_dashBoard');
+    }
+
+    public function showPrestatairesAction() {
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:Prestataire');
+      $prestataires = $repository->findAll();
+
+      return $this->render('IUTNuptiasBundle:Nuptias:affichePrestataires.html.twig', array(
+          'prestataires' => $prestataires
+      ));
     }
 }

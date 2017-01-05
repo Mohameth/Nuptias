@@ -42,7 +42,7 @@
                 <li><a href="{{ path('iut_nuptias_dashBoard') }}">Espace personnel</a></li>
                 <li><a href="{{ path('iut_nuptias_packs') }}">Créez votre mariage</a></li>
               {% endif %}
-              <li><a href="#">Nos prestataires</a></li>
+              <li><a href="{{ path('iut_nuptias_liste_prestataires') }}">Nos prestataires</a></li>
               <li><a href="{{ path('iut_nuptias_contact') }}">Contact</a></li>
 
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

@@ -117,3 +117,8 @@ iut_nuptias_remove_service_client:
     path: /service/enlever
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:removeService
+
+iut_nuptias_liste_prestataires:
+    path: /nosPrestataires
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:showPrestataires
