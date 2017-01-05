@@ -79,6 +79,11 @@ iut_nuptias_edit_service:
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:editService
 
+iut_nuptias_delete_service:
+    path: /service/suppression
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:deleteService
+
 iut_nuptias_service:
     path: /service/gestion
     defaults:
@@ -102,3 +107,8 @@ iut_nuptias_contact:
     path: /contact
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:contact
+
+iut_nuptias_add_service_client:
+    path: /service/ajouter
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:addService
