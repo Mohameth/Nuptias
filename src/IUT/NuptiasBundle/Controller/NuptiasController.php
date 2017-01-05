@@ -474,7 +474,7 @@ class NuptiasController extends Controller
       ));
     }
 
-    public function addService(Request $request) {
+    public function addServiceAction(Request $request) {
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
       if ($user == null) return new Response("ERREUR : Vous devez vous connecter pour créer un service.");
@@ -497,5 +497,44 @@ class NuptiasController extends Controller
       $service = $repository->find($id_service);
 
       $user->addService($service);
+
+      // Enregistrement
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($user);
+      $em->flush();
+
+      return $this->redirectToRoute('iut_nuptias_dashBoard');
     }
+
+  public function removeServiceAction(Request $request) {
+    $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+    if ($user == null) return new Response("ERREUR : Vous devez vous connecter pour créer un service.");
+    //Il faut que l'utilisateur soit un client
+    if (get_class($user) != 'IUT\NuptiasBundle\Entity\Client') {
+      return new Response("ERREUR : Seul un prestataire peut ajouter un service");
+    }
+
+    $id_service = $request->query->get('id_service');
+    $type = $request->query->get('type');
+    if (!isset($id_service) || $id_service == null || $id_service == 0) {//La spécification d'un service est obligatoire
+      return new Response("ERREUR : Le service n'a pas été spécifié");
+    }
+    if (!isset($type) || $type == null) {
+      return new Response("ERREUR : Le type de service n'a pas été spécifié");
+    }
+
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
+    $service = $repository->find($id_service);
+
+    $user->removeService($service);
+
+    // Enregistrement
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($user);
+    $em->flush();
+
+    return $this->redirectToRoute('iut_nuptias_dashBoard');
+  }
 }

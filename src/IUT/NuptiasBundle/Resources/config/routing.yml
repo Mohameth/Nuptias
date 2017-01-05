@@ -107,3 +107,8 @@ iut_nuptias_add_service_client:
     path: /service/ajouter
     defaults:
         _controller: IUTNuptiasBundle:Nuptias:addService
+
+iut_nuptias_remove_service_client:
+    path: /service/enlever
+    defaults:
+        _controller: IUTNuptiasBundle:Nuptias:removeService
