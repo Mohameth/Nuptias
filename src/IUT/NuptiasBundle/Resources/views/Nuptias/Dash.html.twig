@@ -4,8 +4,12 @@
   {{ parent() }} - Espace personnel
 {% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+{% endblock %}
 
+{% block body %}
   <h1> Espace Personnel </h1>
   {% if succesSuppression is defined %}
     {% if succesSuppression == "true" %}
@@ -14,64 +18,82 @@
       <p>Nous sommes désolés, suite à une erreur interne votre requête n'as pu aboutir.</p>
     {% endif %}
   {% endif %}
-
+  
+  {% if mariage is not defined %}
+    {% set mariage = false %}
+  {% endif %}
+  
   <h3> Récapitulatif de votre mariage : </h3>
-
+  <div class="tabbable custom-tabs">
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Général</a></li>
-    <li><a data-toggle="tab" href="#invites">Invités</a></li>
-    <li><a data-toggle="tab" href="#salle">Salle</a></li>
-    <li><a data-toggle="tab" href="#traiteur">Traiteur</a></li>
-    <li><a data-toggle="tab" href="#photographe">Photographe</a></li>
-    <li><a data-toggle="tab" href="#DJ">DJ</a></li>
+    <li{% if not mariage %} class="disabled"{% endif %}><a {% if mariage %}data-toggle="tab"{% endif %} href="#invites">Invités</a></li>
+    <li{% if not mariage %} class="disabled"{% endif %}><a {% if mariage %}data-toggle="tab"{% endif %} href="#salle">Salle</a></li>
+    <li{% if not mariage %} class="disabled"{% endif %}><a {% if mariage %}data-toggle="tab"{% endif %} href="#traiteur">Traiteur</a></li>
+    <li{% if not mariage %} class="disabled"{% endif %}><a {% if mariage %}data-toggle="tab"{% endif %} href="#photographe">Photographe</a></li>
+    <li{% if not mariage %} class="disabled"{% endif %}><a {% if mariage %}data-toggle="tab"{% endif %} href="#DJ">DJ</a></li>
   </ul>
 
-
+    
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h3>Général</h3>
-      {% if mariage == false %}
-         <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_packs') }}">Commencer</a>
-      {% else %}
-
-
-          <h4>Infos générales : </h4>
+      {% if mariage != false %}
+      <div class="pane">
+        <div class="tab left-side">
+          <h3>Infos générales </h3>
           <p> Date du mariage  : {{ mariage.date|date('d/m/Y') }}</p>
           <p> Ville du mariage : {{ mariage.ville }}</p>
           <p> Nombre d'invités : {{ mariage.nbInvites }}</p>
-          <p> Budget du mariage : {{ mariage.budget }}</p>
-
+        </div>
+        <div class="tab right-side">
+          <h3>Résumé budgétaire </h3>
+          <p> Budget du mariage : {{ mariage.budget }} €</p>
+  
           {% if mariage.budgetSalle %}
-            <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
+            <p> Budget pour la salle : {{ mariage.budgetSalle }} €</p>
           {% endif %}
           {% if mariage.budgetTraiteur %}
-            <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
+            <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }} €</p>
           {% endif %}
           {% if mariage.budgetPhotographe %}
-            <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
+            <p> Budget pour le photographe : {{ mariage.budgetPhotographe }} €</p>
           {% endif %}
           {% if mariage.budgetDJ %}
-            <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
+            <p> Budget pour le DJ : {{ mariage.budgetDJ }} €</p>
           {% endif %}
-
+        </div>
+      </div>
         <!-- Enlever les commentaires pour permettre à un client de créer plusieurs mariages -->
         <!-- <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Ajouter un autre mariage</a> -->
+      {% else %}
+        <p>Gérer l'organisation de votre mariage en cliquant sur commencer.</p>
+        <a id=creer-mariage class="btn btn-primary btn-info" href="{{ path('iut_nuptias_packs') }}">Commencer</a>
       {% endif %}
     </div>
 
 
 
     <div id="invites" class="tab-pane fade">
-      <h3>Gestion des invites </h3>
       {% if mariage %}
+        
+        <div class="tab left-side">
+          <div id="chartdiv"></div>
+        </div>
+        <div class="tab right-side">
+          <h3>Gestion des invites </h3>
+          <p> Nombre d'invités prévues : {{ mariage.nbInvites }}</p>
+          <p> Nombre effectif d'invités enregistrés : {{ mariage.getInvites()|length }}</p>
+          <p> Nombre d'invitations envoyés : {{ mariage.getInvites()|nbInvitationEnvoye }}</p>
+          <p> Nombre d'invitations en attente : {{ mariage.getInvites()|nbInvitationEnAttente }}</p>
           <a href="{{ path('iut_nuptias_invites', {'id_mariage' : mariage.id}) }}" class="btn btn-primary btn-primary">Gerez Vos Invités <span class="glyphicon glyphicon-list"></span></a>
-          <p> Nombre d'invités : {{ mariage.nbInvites }}</p>
+        </div>
       {% endif %}
     </div>
 
 
 
     <div id="salle" class="tab-pane fade">
+      <div class="tab left-side">
       <h3>Gestion de la salle </h3>
       {% for service in app.user.getServices() %}
         {% if class(service) == 'Salle' %}
@@ -79,7 +101,7 @@
             <h4> {{ class(service) }} à {{ service.ville }}</h4>
             <p>Description : {{ service.description }}</p>
             <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }}</p>
+            <p>Prix : {{ service.prix }} €</p>
             {% if service.capacite is defined %}
               <p>Capacite : {{ service.capacite }}</p>
             {% endif %}
@@ -87,15 +109,19 @@
           </div>
         {% endif %}
       {% endfor %}
-      {% if mariage and mariage.budgetSalle %}
+      </div>
+      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Salle'}) }}" class="btn btn-primary btn-primary">Voir les salles disponibles<span class="glyphicon glyphicon-list"></span></a>
-        <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
-      {% endif %}
+        {% if mariage and mariage.budgetSalle %}
+          <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
+        {% endif %}
+      </div>
     </div>
 
 
 
     <div id="traiteur" class="tab-pane fade">
+      <div class="tab left-side">
       <h3>Gestion du traiteur </h3>
       {% for service in app.user.getServices() %}
         {% if class(service) == 'Traiteur' %}
@@ -111,15 +137,19 @@
           </div>
         {% endif %}
       {% endfor %}
-      {% if mariage and mariage.budgetTraiteur %}
+      </div>
+      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Traiteur'}) }}" class="btn btn-primary btn-primary">Voir les traiteurs disponibles <span class="glyphicon glyphicon-list"></span></a>
-        <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
-      {% endif %}
+        {% if mariage and mariage.budgetTraiteur %}
+          <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
+        {% endif %}
+      </div>
     </div>
 
 
 
     <div id="photographe" class="tab-pane fade">
+      <div class="tab left-side">
       <h3>Gestion du photographe </h3>
       {% for service in app.user.getServices() %}
         {% if class(service) == 'Photographe' %}
@@ -127,7 +157,7 @@
             <h4> {{ class(service) }} à {{ service.ville }}</h4>
             <p>Description : {{ service.description }}</p>
             <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }}</p>
+            <p>Prix : {{ service.prix }} €</p>
             {% if service.capacite is defined %}
               <p>Capacite : {{ service.capacite }}</p>
             {% endif %}
@@ -135,15 +165,19 @@
           </div>
         {% endif %}
       {% endfor %}
-      {% if mariage and mariage.budgetPhotographe %}
+      </div>
+      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Photographe'}) }}" class="btn btn-primary btn-primary">Voir les photographes disponibles <span class="glyphicon glyphicon-list"></span></a>
-        <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
-      {% endif %}
+        {% if mariage and mariage.budgetPhotographe %}
+          <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
+        {% endif %}
+      </div>
     </div>
 
 
 
     <div id="DJ" class="tab-pane fade">
+      <div class="tab left-side">
       <h3>Gestion du DJ </h3>
       {% for service in app.user.getServices() %}
         {% if class(service) == 'DJ' %}
@@ -159,16 +193,61 @@
           </div>
         {% endif %}
       {% endfor %}
-      {% if mariage and mariage.budgetDJ %}
+      </div>
+      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'DJ'}) }}" class="btn btn-primary btn-primary">Voir les DJ disponibles <span class="glyphicon glyphicon-list"></span></a>
-        <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
-      {% endif %}
+        {% if mariage and mariage.budgetDJ %}
+          <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
+        {% endif %}
+      </div>
     </div>
 
-    {% if mariage %}
-      <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_delete_mariage', {'id': mariage.id }) }}">Supprimer le mariage</a>
-    {% endif %}
+    
   </div>
+  </div>
+  
+  {% if mariage %}
+    <a class="btn btn-primary btn-danger" href="{{ path('iut_nuptias_delete_mariage', {'id': mariage.id }) }}">Supprimer le mariage <span class="glyphicon glyphicon-trash"></span></a>
+    <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_mariage', {'id': mariage.id }) }}">Modifier le mariage <span class="glyphicon glyphicon-cog"></span></a>
+  {% endif %}
+{% endblock %}
 
-
+{% block javascripts %}
+  {{ parent() }}
+  {% if mariage is defined and mariage.getInvites()|length != 0 %}
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  
+  <script>
+    
+    var chart = AmCharts.makeChart( "chartdiv", {
+      "type": "pie",
+      "theme": "light",
+      "dataProvider": [ {
+        "Etat": "En attente",
+        "nombre": {{ mariage.getInvites()|nbInvitationEnAttente }}
+      }, {
+        "Etat": "Réponse positive",
+        "nombre": {{ mariage.getInvites()|nbInvitationPositive }}
+      }, {
+        "Etat": "Réponse Négative",
+        "nombre": {{ mariage.getInvites()|nbInvitationNegative }}
+      }, {
+        "Etat": "Non envoyé",
+        "nombre": {{  mariage.getInvites()|length-mariage.getInvites()|nbInvitationEnvoye }}
+      } ],
+      "valueField": "nombre",
+      "titleField": "Etat",
+      "balloon":{
+        "fixedPosition":true
+      },
+      "export": {
+        "enabled": true
+      }
+    } );
+  </script>
+  {% endif %}
+  
 {% endblock %}

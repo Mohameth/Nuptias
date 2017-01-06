@@ -298,6 +298,39 @@ class NuptiasController extends Controller
           'form' => $form->createView()));
     }
 
+    public function editMariageAction(Request $request, $id = 0) {
+      /**TODO: Supprimer dans la DB toutes les dépendances (invites, services liés ...)*/
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
+
+      //Récupération du mariage
+      if ($id != 0) {
+        $mariage = $repository->find($id);
+        if ($mariage != null) {
+          $form = $this->get('form.factory')->create(MariageType::class, $mariage);
+
+          if($request->isMethod('POST')) {
+            // Le formulaire hydrate la variable $mariage avec les bonnes valeurs
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+              // Enregistrement
+              $em = $this->getDoctrine()->getManager();
+              $em->persist($mariage);
+              $em->flush();
+
+              return $this->DashBoardAction();
+            }
+          }
+        }
+      }
+      else {return new Response("ERREUR: Le mariage n'existe pas");}
+
+      return $this->render('IUTNuptiasBundle:Nuptias:mariage.html.twig', array(
+          'pack' => 'All',
+          'form' => $form->createView()));
+    }
+
     public function serviceAction(Request $request) {
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
       /* TODO: Trouver ses services et les afficher, si aucun lui proposer d'en créer un nouveau */
