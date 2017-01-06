@@ -17,3 +17,7 @@ td:last-child{
 .checkbox{
   text-align: center;
 }
+
+#list_de_trucs{
+  margin: 0px;
+}
