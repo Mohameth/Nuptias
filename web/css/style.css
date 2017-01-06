@@ -99,6 +99,16 @@
   border-radius: 0px 5px 5px 5px;
 }
 
+a.btn-primary.btn-primary.btn-primary:hover{
+  background-color: #0080ff;
+  border-color: #0080ff;
+}
+
+a.btn.btn-primary.btn-danger:hover{
+  background-color: red;
+  border-color: red;
+}
+
 a.btn.btn-primary.btn-primary{
   background-color: #dec312;
   border-color: #dec312;
