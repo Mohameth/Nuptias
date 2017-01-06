@@ -1,0 +1,38 @@
+body{
+  margin:0;
+  padding:0;
+  background: url("../public/images/Photo-page-d'accueil.jpg") no-repeat center fixed;
+  background-size: cover;
+  color: white;
+}
+
+.nav-tabs>li:first-child>a{
+  border-top-left-radius: 5px;
+}
+
+.nav-tabs>li:last-child>a{
+  border-top-right-radius: 5px;
+}
+
+.nav-tabs>li>a{
+  /* Changer la couleur du texte des onglets */
+}
+
+.tab-content>a{
+  border-color: #de4612;
+  background-color: #de4612;
+  margin-bottom: 10px;
+}
+
+.tab-pane>a{
+  border-color: #de8612;
+  background-color: #de8612;
+  margin-bottom: 5px;
+}
+
+#content{
+  border-radius: 10px;
+  width: 90%;
+  margin: 0 auto;
+  background: rgba(20, 20, 20, 0.8);
+}

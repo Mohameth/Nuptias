@@ -2,7 +2,16 @@
   /*height: 25em;*/
   background-clip: content-box;/*Pour que le background ignore le padding*/
 
-  background-color: AliceBlue;
+  /*background-color: AliceBlue;*/
+}
+
+.btn{
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.form-control{
+  border-radius: 5px;
 }
 
 .mariage-categorie {
@@ -16,8 +25,10 @@
 }
 
 .col-md-4 > a {
-  position: absolute;
-  bottom: -50px;
+  border-color: #de8612;
+  background-color: #de8612;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .mariage-contenu {

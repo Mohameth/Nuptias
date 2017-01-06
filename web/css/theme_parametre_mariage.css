@@ -1,0 +1,18 @@
+.form-inline .form-control{
+  border-radius: 0px;
+}
+
+.form-inline > select:first-child{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.form-inline > select:last-child{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.mariage-categorie > p{
+  margin: 5px 0px 0px 0px;
+  text-align: center;
+}

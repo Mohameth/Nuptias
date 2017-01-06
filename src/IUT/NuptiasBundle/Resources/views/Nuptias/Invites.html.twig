@@ -1,5 +1,10 @@
 {% extends "IUTNuptiasBundle::layout.html.twig" %}
 
+{% block stylesheets %} <!-- feuille de styles pour les pages autre que index.html.twig -->
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/theme_invites.css')}}" />
+{% endblock %}
+
 {% block title %}
   {{ parent() }} - Gestion des Invités
 {% endblock %}
@@ -77,7 +82,7 @@
   {{ form_widget(form.EnregistrerPuisEnvoyer, {'attr': {'class': 'btn btn-primary btn-info'}}) }}
   <div style="display: none">{{ form_rest(form) }}</div>{#On cache les autres éléments du formulaire de mariage pour ne s'occuper que des invités.#}
   {{ form_widget(form._token) }}{{ form_end(form) }}
-  
+
   <h2> Invitations déja envoyés : </h2>
   {% set nombreEnvoi = 0 %}
   {% for invite in invites %}
@@ -129,7 +134,7 @@
     jQuery(document).ready(function() {
       //Sert juste à ajouter le span sans rédifinir le block label de twig
       jQuery('#iut_nuptiasbundle_mariage_EnregistrerPuisEnvoyer').prepend('<span class="glyphicon glyphicon-arrow-right"></span> ');
-        
+
       jQuery('#addInvite').click(function(e) {
         e.preventDefault();
 
@@ -147,13 +152,13 @@
         var nouvelleLigne = jQuery('<tr></tr>').html(newWidget);
         nouvelleLigne.appendTo(invites);
       });
-      
+
       //Compte du nombre d'invitatons
       {% set nombreEnvoi = 0 %}
       {% for invite in invites %}
         {% if invite.reponse != 'Non envoyé' %} {% set nombreEnvoi = nombreEnvoi+1 %} {% endif %}
       {% endfor %}
-      
+
       //Si toutes les invitations ont été envoyés, clic sur ajouter un invité enclenché par défaut.
       if (index-{{ nombreEnvoi }} == 0) $('#addInvite').trigger("click");
     });

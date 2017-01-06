@@ -2,6 +2,11 @@
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/theme_parametre_mariage.css')}}" />
+{% endblock %}
+
 {% block title %}
   {{ parent() }} - Espace personnel
 {% endblock %}

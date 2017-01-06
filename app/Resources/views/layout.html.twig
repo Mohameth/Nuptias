@@ -33,7 +33,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"></a></li>
+              <li><a href="#"></a></li> <!-- Cette ligne est utile ? -->
               <li><a href="{{ path('iut_nuptias_accueil') }}">Accueil</a></li>
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user|estPrestataire %}<!--
               Les prestataires doivent pouvoir créer un service -->
