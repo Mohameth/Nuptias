@@ -36,6 +36,9 @@ class Mariage
     private $ville;
 
     /**
+     * @Assert\GreaterThan("today")
+     */
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date", type="date", nullable=true)
@@ -49,12 +52,18 @@ class Mariage
     private $Invites;
 
     /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
+    /**
      * @var integer
      *
      * @ORM\Column(name="nbInvites", type="integer")
      */
     private $nbInvites;// Nombre d'invités éstimés lors du formulaire
 
+    /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
     /**
      * @var integer
      *
@@ -63,12 +72,19 @@ class Mariage
     private $budget;
 
     /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
+    /**
      * @var integer
      *
      * @ORM\Column(name="budgetSalle", type="integer", nullable=true)
      */
     private $budgetSalle;
 
+
+    /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
     /**
      * @var integer
      *
@@ -77,12 +93,18 @@ class Mariage
     private $budgetTraiteur;
 
     /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
+    /**
      * @var integer
      *
      * @ORM\Column(name="budgetPhotographe", type="integer", nullable=true)
      */
     private $budgetPhotographe;
 
+    /**
+     * @Assert\GreaterThanOrEqual("0")
+     */
     /**
      * @var integer
      *
