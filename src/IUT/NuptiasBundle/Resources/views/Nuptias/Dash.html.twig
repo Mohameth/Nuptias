@@ -75,16 +75,17 @@
 
     <div id="invites" class="tab-pane fade">
       {% if mariage %}
+        
         <div class="tab left-side">
+          <div id="chartdiv"></div>
+        </div>
+        <div class="tab right-side">
           <h3>Gestion des invites </h3>
           <p> Nombre d'invités prévues : {{ mariage.nbInvites }}</p>
           <p> Nombre effectif d'invités enregistrés : {{ mariage.getInvites()|length }}</p>
           <p> Nombre d'invitations envoyés : {{ mariage.getInvites()|nbInvitationEnvoye }}</p>
           <p> Nombre d'invitations en attente : {{ mariage.getInvites()|nbInvitationEnAttente }}</p>
-        </div>
-        <div class="tab right-side">
           <a href="{{ path('iut_nuptias_invites', {'id_mariage' : mariage.id}) }}" class="btn btn-primary btn-primary">Gerez Vos Invités <span class="glyphicon glyphicon-list"></span></a>
-          <div id="chartdiv"></div>
         </div>
       {% endif %}
     </div>
