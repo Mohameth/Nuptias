@@ -9,7 +9,6 @@
   <h1>Choisissez un prestataire pour votre mariage</h1>
 
   {% for presta in prestataires %}
-    {{ dump(presta) }}
     <div class="well">
       <h3>{{ presta.nom }} à {{ presta.ville }}</h3>
       <p>Téléphone : {{ presta.tel }}</p>

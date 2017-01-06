@@ -92,6 +92,42 @@
   border-radius: 0px 5px 5px 5px;
 }
 
+a.btn-primary.btn-primary.btn-primary:hover{
+  background-color: #0080ff;
+  border-color: #0080ff;
+}
+
+a.btn.btn-primary.btn-danger:hover{
+  background-color: red;
+  border-color: red;
+}
+
+a.btn.btn-primary.btn-primary{
+  background-color: #dec312;
+  border-color: #dec312;
+}
+
+a.btn.btn-primary.btn-info{
+  background-color: #de8612;
+  border-color: #de8612;
+}
+
+a.btn.btn-primary.btn-danger{
+  background-color: #de4612;
+  border-color: #de4612;
+}
+
+.row-service > div{
+  background-color: #de4612;
+  border-color: #de4612;
+  border-radius: 5px;
+}
+
+div.well{
+  background-color: #de4612;
+  border-color: #de4612;
+  border-radius: 5px;
+}
 .pane {
   width: 100%;
   overflow: hidden;

@@ -13,7 +13,7 @@
       <h4> {{ class(service) }} à {{ service.ville }}</h4>
       <p>Description : {{ service.description }}</p>
       <p>Adresse : {{ service.adresse }}</p>
-      <p>Prix : {{ service.prix }}</p>
+      <p>Prix : {{ service.prix }} €</p>
       {% if service.capacite is defined %}
         <p>Capacite : {{ service.capacite }}</p>
       {% endif %}

@@ -18,18 +18,6 @@ body{
   /* Changer la couleur du texte des onglets */
 }
 
-.tab-content>a{
-  border-color: #de4612;
-  background-color: #de4612;
-  margin-bottom: 10px;
-}
-
-.tab-pane>a{
-  border-color: #de8612;
-  background-color: #de8612;
-  margin-bottom: 5px;
-}
-
 #content{
   border-radius: 10px;
   width: 90%;

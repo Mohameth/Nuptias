@@ -17,14 +17,14 @@
   <body>
     <h1>Bonjour {{ name }} voici votre invitation pour le mariage </h1>
 
-    <p> Ceci est un prototype d'Annonce de mariage veiller ne pas en prendre compte. Simon Troussier </p>
+    <p> Ceci est un prototype d'Annonce de mariage veuiller ne pas en prendre compte. Simon Troussier </p>
 
     <div class="row">
-      <a href="http://localhost{{ path('iut_nuptias_invite_reponse',{'id_mariage': id_mariage, 'id_invite': id_invite, 'id_reponse': 1}) }}" class="btn btn-lg btn-success">Accepter l'invitation</a>
+      <a href="http://192.168.12.186{{ path('iut_nuptias_invite_reponse',{'id_mariage': id_mariage, 'id_invite': id_invite, 'id_reponse': 1}) }}" class="btn btn-lg btn-success">Accepter l'invitation</a>
     </div>
 
     <div class="row">
-      <a href="http://localhost{{ path('iut_nuptias_invite_reponse',{'id_mariage': id_mariage, 'id_invite': id_invite, 'id_reponse': 0}) }}" class="btn btn-lg btn-danger">Refuser l'invitation</a>
+      <a href="http://192.168.12.186{{ path('iut_nuptias_invite_reponse',{'id_mariage': id_mariage, 'id_invite': id_invite, 'id_reponse': 0}) }}" class="btn btn-lg btn-danger">Refuser l'invitation</a>
     </div>
   </body>
 </html>
