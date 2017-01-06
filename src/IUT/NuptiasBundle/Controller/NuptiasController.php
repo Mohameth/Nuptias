@@ -502,7 +502,7 @@ class NuptiasController extends Controller
       $listeServices = $repository->findAll();
 
       return $this->render('IUTNuptiasBundle:Nuptias:afficheServices.html.twig', array(
-          'listeServices' => $listeServices,
+          'listeServices' => $listeFinale,
           'type' => $type
       ));
     }

@@ -100,6 +100,7 @@
         {% endif %}
       </div>
       <div class="tab right-side">
+        <h3>Gestion de la salle</h3>
         {% for service in app.user.getServices() %}
           {% if class(service) == 'Salle' %}
             <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
@@ -138,7 +139,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Choisir</a>
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
@@ -213,7 +214,7 @@
 
 {% block javascripts %}
   {{ parent() }}
-  {% if mariage is defined and mariage.getInvites()|length != 0 %}
+  {% if mariage is defined and mariage != false and mariage.getInvites()|length != 0 %}
   <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
   <script src="https://www.amcharts.com/lib/3/pie.js"></script>
   <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
