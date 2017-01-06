@@ -18,7 +18,7 @@
 
     {% for listeServiceParType in listeService %}
       {% for service in listeServiceParType %}
-        
+
         {% if service is not empty %}
           {% if compteurColonne == 0 or compteurColonne is divisibleby(4) %}<div class="row-service">
             {% set nouvelleLigne = compteurColonne %}{% set baliseFerme = 0 %}
@@ -27,7 +27,7 @@
               <h4> {{ class(service) }} à {{ service.ville }}</h4>
               <p>Description : {{ service.description }}</p>
               <p>Adresse : {{ service.adresse }}</p>
-              <p>Prix : {{ service.prix }}</p>
+              <p>Prix : {{ service.prix }} €</p>
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
@@ -37,7 +37,7 @@
           {% if compteurColonne == nouvelleLigne+3 %}{% set baliseFerme = 1 %}</div>{% endif %}
           {% set compteurColonne = compteurColonne+1 %}
         {% endif %}
-        
+
       {% endfor %}
     {% endfor %}
 
