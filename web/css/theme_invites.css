@@ -18,6 +18,16 @@ td:last-child{
   text-align: center;
 }
 
+button.btn.btn-primary.btn-info{
+  background-color: #de8612;
+  border-color: #de8612;
+}
+
+button.btn-default.btn{
+  background-color: #1e9407;
+  border-color: #1e9407;
+}
+
 #list_de_trucs{
   margin: 0px;
 }
