@@ -75,7 +75,7 @@
 
     <div id="invites" class="tab-pane fade">
       {% if mariage %}
-        
+
         <div class="tab left-side">
           <div id="chartdiv"></div>
         </div>
@@ -94,27 +94,26 @@
 
     <div id="salle" class="tab-pane fade">
       <div class="tab left-side">
-      <h3>Gestion de la salle </h3>
-      {% for service in app.user.getServices() %}
-        {% if class(service) == 'Salle' %}
-          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
-            <h4> {{ class(service) }} à {{ service.ville }}</h4>
-            <p>Description : {{ service.description }}</p>
-            <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }} €</p>
-            {% if service.capacite is defined %}
-              <p>Capacite : {{ service.capacite }}</p>
-            {% endif %}
-            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
-          </div>
-        {% endif %}
-      {% endfor %}
-      </div>
-      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Salle'}) }}" class="btn btn-primary btn-primary">Voir les salles disponibles<span class="glyphicon glyphicon-list"></span></a>
         {% if mariage and mariage.budgetSalle %}
           <p> Budget pour la salle : {{ mariage.budgetSalle }}</p>
         {% endif %}
+      </div>
+      <div class="tab right-side">
+        {% for service in app.user.getServices() %}
+          {% if class(service) == 'Salle' %}
+            <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+              <h4> {{ class(service) }} à {{ service.ville }}</h4>
+              <p>Description : {{ service.description }}</p>
+              <p>Adresse : {{ service.adresse }}</p>
+              <p>Prix : {{ service.prix }} €</p>
+              {% if service.capacite is defined %}
+                <p>Capacite : {{ service.capacite }}</p>
+              {% endif %}
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
 
@@ -122,27 +121,27 @@
 
     <div id="traiteur" class="tab-pane fade">
       <div class="tab left-side">
-      <h3>Gestion du traiteur </h3>
-      {% for service in app.user.getServices() %}
-        {% if class(service) == 'Traiteur' %}
-          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
-            <h4> {{ class(service) }} à {{ service.ville }}</h4>
-            <p>Description : {{ service.description }}</p>
-            <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }}</p>
-            {% if service.capacite is defined %}
-              <p>Capacite : {{ service.capacite }}</p>
-            {% endif %}
-            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Choisir</a>
-          </div>
-        {% endif %}
-      {% endfor %}
-      </div>
-      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Traiteur'}) }}" class="btn btn-primary btn-primary">Voir les traiteurs disponibles <span class="glyphicon glyphicon-list"></span></a>
         {% if mariage and mariage.budgetTraiteur %}
           <p> Budget pour le traiteur : {{ mariage.budgetTraiteur }}</p>
         {% endif %}
+      </div>
+      <div class="tab right-side">
+        <h3>Gestion du traiteur </h3>
+        {% for service in app.user.getServices() %}
+          {% if class(service) == 'Traiteur' %}
+            <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+              <h4> {{ class(service) }} à {{ service.ville }}</h4>
+              <p>Description : {{ service.description }}</p>
+              <p>Adresse : {{ service.adresse }}</p>
+              <p>Prix : {{ service.prix }}</p>
+              {% if service.capacite is defined %}
+                <p>Capacite : {{ service.capacite }}</p>
+              {% endif %}
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Choisir</a>
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
 
@@ -150,27 +149,27 @@
 
     <div id="photographe" class="tab-pane fade">
       <div class="tab left-side">
-      <h3>Gestion du photographe </h3>
-      {% for service in app.user.getServices() %}
-        {% if class(service) == 'Photographe' %}
-          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
-            <h4> {{ class(service) }} à {{ service.ville }}</h4>
-            <p>Description : {{ service.description }}</p>
-            <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }} €</p>
-            {% if service.capacite is defined %}
-              <p>Capacite : {{ service.capacite }}</p>
-            {% endif %}
-            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
-          </div>
-        {% endif %}
-      {% endfor %}
-      </div>
-      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'Photographe'}) }}" class="btn btn-primary btn-primary">Voir les photographes disponibles <span class="glyphicon glyphicon-list"></span></a>
         {% if mariage and mariage.budgetPhotographe %}
           <p> Budget pour le photographe : {{ mariage.budgetPhotographe }}</p>
         {% endif %}
+      </div>
+      <div class="tab right-side">
+        <h3>Gestion du photographe </h3>
+        {% for service in app.user.getServices() %}
+          {% if class(service) == 'Photographe' %}
+            <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+              <h4> {{ class(service) }} à {{ service.ville }}</h4>
+              <p>Description : {{ service.description }}</p>
+              <p>Adresse : {{ service.adresse }}</p>
+              <p>Prix : {{ service.prix }} €</p>
+              {% if service.capacite is defined %}
+                <p>Capacite : {{ service.capacite }}</p>
+              {% endif %}
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
 
@@ -178,27 +177,27 @@
 
     <div id="DJ" class="tab-pane fade">
       <div class="tab left-side">
-      <h3>Gestion du DJ </h3>
-      {% for service in app.user.getServices() %}
-        {% if class(service) == 'DJ' %}
-          <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
-            <h4> {{ class(service) }} à {{ service.ville }}</h4>
-            <p>Description : {{ service.description }}</p>
-            <p>Adresse : {{ service.adresse }}</p>
-            <p>Prix : {{ service.prix }}</p>
-            {% if service.capacite is defined %}
-              <p>Capacite : {{ service.capacite }}</p>
-            {% endif %}
-            <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
-          </div>
-        {% endif %}
-      {% endfor %}
-      </div>
-      <div class="tab right-side">
         <a href="{{ path('iut_nuptias_affiche_services', {'type' : 'DJ'}) }}" class="btn btn-primary btn-primary">Voir les DJ disponibles <span class="glyphicon glyphicon-list"></span></a>
         {% if mariage and mariage.budgetDJ %}
           <p> Budget pour le DJ : {{ mariage.budgetDJ }}</p>
         {% endif %}
+      </div>
+      <div class="tab right-side">
+        <h3>Gestion du DJ </h3>
+        {% for service in app.user.getServices() %}
+          {% if class(service) == 'DJ' %}
+            <div class="well" style="display: inline-block; width: 25%; min-width: 200px; vertical-align: top">
+              <h4> {{ class(service) }} à {{ service.ville }}</h4>
+              <p>Description : {{ service.description }}</p>
+              <p>Adresse : {{ service.adresse }}</p>
+              <p>Prix : {{ service.prix }}</p>
+              {% if service.capacite is defined %}
+                <p>Capacite : {{ service.capacite }}</p>
+              {% endif %}
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
 
