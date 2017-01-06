@@ -502,7 +502,7 @@ class NuptiasController extends Controller
       $listeServices = $repository->findAll();
 
       return $this->render('IUTNuptiasBundle:Nuptias:afficheServices.html.twig', array(
-          'listeServices' => $listeFinale,
+          'listeServices' => $listeServices,
           'type' => $type
       ));
     }
@@ -511,7 +511,7 @@ class NuptiasController extends Controller
     public function contactAction() {
       return $this->render('IUTNuptiasBundle:Nuptias:contact.html.twig');
     }
-    
+
     public function addServiceAction(Request $request) {
       $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
