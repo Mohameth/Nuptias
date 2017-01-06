@@ -138,7 +138,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Choisir</a>
+              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
