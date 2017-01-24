@@ -76,7 +76,7 @@
 }
 .tabbable.custom-tabs > .nav-tabs > li.active > a {
   background-color: #f5f5f5;
-  background-color:#ED5D24;
+  background-color:rgb(63,182,24);;
   color: white;
   color: #696969;
   box-shadow: none;
@@ -84,7 +84,7 @@
 
 .tabbable.custom-tabs > .tab-content {
   background-color: #f5f5f5;
-  background-color:#ED5D24;
+  background-color:rgb(63,182,24);
   color: white;
   padding: 20px;
   padding-top: 10px;
@@ -103,8 +103,8 @@ a.btn.btn-primary.btn-danger:hover{
 }
 
 a.btn.btn-primary.btn-primary{
-  background-color: #dec312;
-  border-color: #dec312;
+  background-color: #3A873A;
+  border-color: darkgreen;
 }
 
 a.btn.btn-primary.btn-info{
@@ -124,8 +124,8 @@ a.btn.btn-primary.btn-danger{
 }
 
 div.well{
-  background-color: #de4612;
-  border-color: #de4612;
+  background-color: darkgreen;
+  border-color: rgb(63,182,24);;
   border-radius: 5px;
 }
 .pane {

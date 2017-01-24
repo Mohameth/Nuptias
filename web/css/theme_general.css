@@ -6,6 +6,10 @@ body{
   color: white;
 }
 
+table:hover {
+  border: none;
+}
+
 .nav-tabs>li:first-child>a{
   border-top-left-radius: 5px;
 }

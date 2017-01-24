@@ -67,7 +67,7 @@
         <!-- <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_mariage') }}">Ajouter un autre mariage</a> -->
       {% else %}
         <p>Gérer l'organisation de votre mariage en cliquant sur commencer.</p>
-        <a id=creer-mariage class="btn btn-primary btn-info" href="{{ path('iut_nuptias_packs') }}">Commencer</a>
+        <a id=creer-mariage class="btn btn-info btn-info" href="{{ path('iut_nuptias_packs') }}">Commencer</a>
       {% endif %}
     </div>
 
@@ -111,7 +111,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+              <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
@@ -139,7 +139,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+              <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
@@ -167,7 +167,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+              <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
@@ -195,7 +195,7 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+              <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_remove_service_client', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% endif %}
         {% endfor %}
@@ -207,8 +207,8 @@
   </div>
 
   {% if mariage %}
-    <a class="btn btn-primary btn-danger" href="{{ path('iut_nuptias_delete_mariage', {'id': mariage.id }) }}">Supprimer le mariage <span class="glyphicon glyphicon-trash"></span></a>
-    <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_mariage', {'id': mariage.id }) }}">Modifier le mariage <span class="glyphicon glyphicon-cog"></span></a>
+    <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_delete_mariage', {'id': mariage.id }) }}">Supprimer le mariage <span class="glyphicon glyphicon-trash"></span></a>
+    <a class="btn btn-info btn-info" href="{{ path('iut_nuptias_edit_mariage', {'id': mariage.id }) }}">Modifier le mariage <span class="glyphicon glyphicon-cog"></span></a>
   {% endif %}
 {% endblock %}
 
