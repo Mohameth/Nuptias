@@ -31,8 +31,8 @@
               {% if service.capacite is defined %}
                 <p>Capacite : {{ service.capacite }}</p>
               {% endif %}
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a>
-              <a class="btn btn-primary btn-info" href="{{ path('iut_nuptias_delete_service', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
+              <a class="btn btn-primary btn-primary" href="{{ path('iut_nuptias_edit_service', {'id_service': service.id, 'type': class(service)}) }}">Modifier</a>
+              <a class="btn btn-danger btn-danger" href="{{ path('iut_nuptias_delete_service', {'id_service': service.id, 'type': class(service)}) }}">Supprimer</a>
             </div>
           {% if compteurColonne == nouvelleLigne+3 %}{% set baliseFerme = 1 %}</div>{% endif %}
           {% set compteurColonne = compteurColonne+1 %}

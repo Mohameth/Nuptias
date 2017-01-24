@@ -225,10 +225,14 @@ class NuptiasController extends Controller
       /**TODO: Supprimer dans la DB toutes les dépendances (invites, services liés ...)*/
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
       //Récupération du mariage
       if ($id != 0) {
         $mariage = $repository->find($id);
+        foreach ($user->getServices() as $service) {
+          $user->removeService($service);
+        }
         if ($mariage != null) {
           $em->remove($mariage);
           $em->flush();
@@ -262,7 +266,8 @@ class NuptiasController extends Controller
         );
 
         if (count($listeMariage) == 1) {
-          return new Response("ERREUR : Vous ne pouvez créer qu'un seul mariage simultanéement.");
+          //return new Response("ERREUR : Vous ne pouvez créer qu'un seul mariage simultanéement.");
+          return $this->redirectToRoute('iut_nuptias_dashBoard', array('dejaMariage' => true));
         }
       }
 
@@ -299,7 +304,6 @@ class NuptiasController extends Controller
     }
 
     public function editMariageAction(Request $request, $id = 0) {
-      /**TODO: Supprimer dans la DB toutes les dépendances (invites, services liés ...)*/
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:Mariage');
 
@@ -492,6 +496,8 @@ class NuptiasController extends Controller
 
     /**Utilisé par les clients, permet l'affichage de tous les services en DB*/
     public function afficheServicesAction(Request $request) {
+      $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
       $type = $request->query->get('type');
       if (!isset($type) || $type == null) {
         return new Response("ERREUR : Le type de service n'a pas été spécifié");
@@ -499,7 +505,17 @@ class NuptiasController extends Controller
 
       $em = $this->getDoctrine()->getManager();
       $repository = $em->getRepository('IUTNuptiasBundle:'.$type);
-      $listeServices = $repository->findAll();
+      $listeServices = array();
+      foreach ($repository->findAll() as $service) {
+        $suppr = false;
+        foreach ($user->getServices() as $service1) {
+          if ($service->getId() == $service1->getId()) {
+            $suppr = true;
+          }
+        }
+
+        if (!$suppr) $listeServices[] = $service;
+      }
 
       return $this->render('IUTNuptiasBundle:Nuptias:afficheServices.html.twig', array(
           'listeServices' => $listeServices,
